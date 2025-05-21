@@ -2,116 +2,137 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-/* * * Script, that desribes Player Movement and Game Logic* * */
-public class TopDownPlayerController : MonoBehaviour
+namespace DungeonRPG
 {
-    Rigidbody2D rb;
-    Animator anim;
-
-    [SerializeField] float speed = 5f;
-    [SerializeField] float runMultiplier = 1.5f;
-    Vector2 moveVector;
-
-    bool isFirstSlime; // Is player near First Slime
-    bool isSecondSlime; // Is player near Second Slime
-
-    static Vector3 afterFightPos;               // Position near slime to safe
-    [SerializeField] GameObject teleportOne;    // Position after First Door
-    [SerializeField] GameObject teleportTwo;    // Position after Second Door
-
-    public B2Input input;
-    InputAction move;
-    InputAction movingFaster;
-    InputAction slimeInteract;
-
-    private void Awake()
+    /// <summary>
+    /// Class representing a top-down player controller in the game.
+    /// </summary>
+    public class TopDownPlayerController : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        input = new B2Input();
+        private Rigidbody2D _rb;
+        private Animator _anim;
 
-        transform.position = afterFightPos; // (0,0,0) is default Spawn pos
-    }
+        [Header("Movement")] [SerializeField] float speed = 5f;
+        [SerializeField] float runMultiplier = 1.5f;
+        private Vector2 _moveVector;
 
-    private void OnEnable()
-    {
-        move = input.Player.Move;
-        move.Enable();
+        [SerializeField] GameObject teleportOne; // Position after First Door
+        [SerializeField] GameObject teleportTwo; // Position after Second Door
+        private static Vector3 _afterFightPos; // Position near slime to safe
+        private bool _isFirstSlime; // Is player near First Slime
+        private bool _isSecondSlime; // Is player near Second Slime
 
-        movingFaster = input.Player.MovingFaster;
-        movingFaster.Enable();
+        private B2Input _input;
+        private InputAction _move;
+        private InputAction _movingFaster;
+        private InputAction _slimeInteract;
 
-        slimeInteract = input.Player.SlimeInteract;
-        slimeInteract.Enable();
-    }
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
+        private static readonly int MoveX = Animator.StringToHash("MoveX");
+        private static readonly int MoveY = Animator.StringToHash("MoveY");
 
-    private void OnDisable()
-    {
-        move.Disable();
-        movingFaster.Disable();
-        slimeInteract.Disable();
-    }
 
-    private void Update()
-    {
-        GetInput();
-        SetAnimations();
-    }
-
-    private void FixedUpdate() => rb.velocity = moveVector * speed;
-
-    private void GetInput()
-    {
-        moveVector = move.ReadValue<Vector2>();
-        if (movingFaster.ReadValue<float>() == 1) moveVector *= runMultiplier;
-        if (slimeInteract.ReadValue<float>() == 1)
+        private void Awake()
         {
-            if (isFirstSlime)
+            _rb = GetComponent<Rigidbody2D>();
+            _anim = GetComponent<Animator>();
+            _input = new B2Input();
+
+            transform.position = _afterFightPos; // (0,0,0) is default Spawn position
+        }
+
+        private void OnEnable() => EnableInput();
+
+        private void OnDisable() => DisableInput();
+
+        private void Update()
+        {
+            HandleInput();
+            SetAnimations();
+        }
+
+        private void FixedUpdate() => _rb.velocity = _moveVector * speed;
+
+        private void EnableInput()
+        {
+            _move = _input.Player.Move;
+            _move.Enable();
+
+            _movingFaster = _input.Player.MovingFaster;
+            _movingFaster.Enable();
+
+            _slimeInteract = _input.Player.SlimeInteract;
+            _slimeInteract.Enable();
+        }
+
+        private void DisableInput()
+        {
+            _move.Disable();
+            _movingFaster.Disable();
+            _slimeInteract.Disable();
+        }
+
+        private void HandleInput()
+        {
+            // Handle Movement
+            _moveVector = _move.ReadValue<Vector2>();
+            if (Mathf.Approximately(_movingFaster.ReadValue<float>(), 1))
             {
-                afterFightPos = transform.position;
-                SceneManager.LoadScene("Fight1");
+                _moveVector *= runMultiplier;
             }
-            if (isSecondSlime)
+
+            // Handle slime logic
+            if (Mathf.Approximately(_slimeInteract.ReadValue<float>(), 1))
             {
-                afterFightPos = transform.position;
-                SceneManager.LoadScene("Fight2");
+                if (_isFirstSlime)
+                {
+                    _afterFightPos = transform.position;
+                    SceneManager.LoadScene("Fight1");
+                }
+
+                if (_isSecondSlime)
+                {
+                    _afterFightPos = transform.position;
+                    SceneManager.LoadScene("Fight2");
+                }
             }
         }
-    }
 
-    private void SetAnimations()
-    {
-        // If the player is moving
-        if (moveVector != Vector2.zero)
+        private void SetAnimations()
         {
-            // Trigger transition to moving state
-            anim.SetBool("IsMoving", true);
+            if (_moveVector != Vector2.zero)
+            {
+                // Trigger transition to moving state
+                _anim.SetBool(IsMoving, true);
 
-            // Set X and Y values for Blend Tree
-            anim.SetFloat("MoveX", moveVector.x);
-            anim.SetFloat("MoveY", moveVector.y);
+                // Set X and Y values for Blend Tree
+                _anim.SetFloat(MoveX, _moveVector.x);
+                _anim.SetFloat(MoveY, _moveVector.y);
+            }
+            else
+            {
+                _anim.SetBool(IsMoving, false);
+            }
         }
-        else
-            anim.SetBool("IsMoving", false);
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        /* * * Doors Logic * * */
-        if (collision.gameObject.name == "Door1")
-            transform.position = teleportOne.transform.position;
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            /* * * Doors Logic * * */
+            if (collision.gameObject.name == "Door1")
+                transform.position = teleportOne.transform.position;
 
-        if (collision.gameObject.name == "Door2")
-            transform.position = teleportTwo.transform.position;
+            if (collision.gameObject.name == "Door2")
+                transform.position = teleportTwo.transform.position;
 
-        /* * * Slime Logic * * */
-        if (collision.gameObject.name == "SlimeCollider1") isFirstSlime = true;
-        if (collision.gameObject.name == "SlimeCollider2") isSecondSlime = true;
-    }
+            /* * * Slime Logic * * */
+            if (collision.gameObject.name == "SlimeCollider1") _isFirstSlime = true;
+            if (collision.gameObject.name == "SlimeCollider2") _isSecondSlime = true;
+        }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.name == "SlimeCollider1") isFirstSlime = false;
-        if (collision.gameObject.name == "SlimeCollider2") isSecondSlime = false;
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.gameObject.name == "SlimeCollider1") _isFirstSlime = false;
+            if (collision.gameObject.name == "SlimeCollider2") _isSecondSlime = false;
+        }
     }
 }

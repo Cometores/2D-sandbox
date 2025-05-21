@@ -1,17 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-/* * * Script, that describes Bullet Movement for Player and Enemy * * */
-public class BulletMovement : MonoBehaviour
+namespace SpaceShooter
 {
-    Rigidbody2D rb;
-    [SerializeField] float speed = 15f;
-    [SerializeField] float movementDirection; // 1 for Player bullet (right), -1 for Enemy bullet (left)
+    /// <summary>
+    /// Handles the movement of a bullet in the game.
+    /// </summary>
+    public class BulletMovement : MonoBehaviour
+    {
+        private Rigidbody2D _rb;
+        
+        [Header("Movement")]
+        [SerializeField] private float speed = 15f;
+        [SerializeField] private float movementDirection; // 1 for Player bullet (right), -1 for Enemy bullet (left)
 
-    void Awake() => rb = GetComponent<Rigidbody2D>();
+        private void Awake() => _rb = GetComponent<Rigidbody2D>();
 
-    void Start() => rb.velocity = Vector2.right * speed * movementDirection;
+        private void Start() => _rb.velocity = Vector2.right * speed * movementDirection;
 
-    void OnBecameInvisible() => Destroy(gameObject);
+        private void OnBecameInvisible() => Destroy(gameObject);
+    }
 }

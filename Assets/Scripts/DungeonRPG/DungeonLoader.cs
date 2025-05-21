@@ -1,7 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DungeonLoader : MonoBehaviour
+namespace DungeonRPG
 {
-    public void LoadDungeonScene() => SceneManager.LoadScene("DungeonRPG");
+    /// <summary>
+    /// Class for loading the dungeon scene after a fight.
+    /// </summary>
+    public class DungeonLoader : MonoBehaviour
+    {
+        public void LoadDungeonScene() => SceneManager.LoadScene("DungeonRPG");
+    }
 }

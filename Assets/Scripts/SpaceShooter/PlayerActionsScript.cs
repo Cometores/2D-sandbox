@@ -1,148 +1,149 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using TMPro;
 
-/* * * Script that describes player actions * * */
-public class PlayerActionsScript : MonoBehaviour
+namespace SpaceShooter
 {
-    AudioSource auSource;
-    SpriteRenderer sr;
-    Rigidbody2D rb;
-
-    [SerializeField] float moveSpeed = 5f;
-    float moveDirection = 0;
-    bool isFail;
-
-    [HideInInspector] public PlayerInputActions playerControls;   // new Input System Asset
-    InputAction move;
-    InputAction fire;
-    InputAction specialFire;
-    
-    [SerializeField] GameObject bullet;
-    [SerializeField] GameObject specialBullet;
-    [SerializeField] AudioClip shootClip;
-    [SerializeField] AudioClip explosionClip;
-    [SerializeField] GameObject explosion;
-    [SerializeField] GameObject turbo;
-
-    [SerializeField] GameObject scoreObj;
-    [SerializeField] GameObject bestScoreObj;
-    TextMeshProUGUI scoreTxt;
-    TextMeshProUGUI bestScoreTxt;
-    int bestScoreValue;
-    int actualScore;
-
-    private void Awake()
+    public class PlayerActionsScript : MonoBehaviour
     {
-        auSource = GetComponent<AudioSource>();
-        sr = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
+        private AudioSource _auSource;
+        private SpriteRenderer _sr;
+        private Rigidbody2D _rb;
 
-        playerControls = new PlayerInputActions();
+        [SerializeField] private float moveSpeed = 5f;
+        private float _moveDirection = 0;
+        private bool _isFail;
 
-        scoreTxt = scoreObj.GetComponent<TextMeshProUGUI>();
-        bestScoreTxt = bestScoreObj.GetComponent<TextMeshProUGUI>();
+        private PlayerInputActions _playerControls;
+        private InputAction _move;
+        private InputAction _fire;
+        private InputAction _specialFire;
 
-        // BestScore text gets best score from Pref or nothing
-        if (PlayerPrefs.HasKey("bestScore"))
+        [SerializeField] private GameObject bullet;
+        [SerializeField] private GameObject specialBullet;
+        [SerializeField] private AudioClip shootClip;
+        [SerializeField] private AudioClip explosionClip;
+        [SerializeField] private GameObject explosion;
+        [SerializeField] private GameObject turbo;
+
+        [SerializeField] private GameObject scoreObj;
+        [SerializeField] private GameObject bestScoreObj;
+        private TextMeshProUGUI _scoreTxt;
+        private TextMeshProUGUI _bestScoreTxt;
+        private int _bestScoreValue;
+        private int _actualScore;
+
+        private void Awake()
         {
-            bestScoreValue = PlayerPrefs.GetInt("bestScore");
-            bestScoreTxt.text = bestScoreValue.ToString();
+            _auSource = GetComponent<AudioSource>();
+            _sr = GetComponent<SpriteRenderer>();
+            _rb = GetComponent<Rigidbody2D>();
+
+            _playerControls = new PlayerInputActions();
+
+            _scoreTxt = scoreObj.GetComponent<TextMeshProUGUI>();
+            _bestScoreTxt = bestScoreObj.GetComponent<TextMeshProUGUI>();
+
+            // Setting the best score
+            if (PlayerPrefs.HasKey("bestScore"))
+            {
+                _bestScoreValue = PlayerPrefs.GetInt("bestScore");
+                _bestScoreTxt.text = _bestScoreValue.ToString();
+            }
         }
-    }
 
-    void OnEnable()
-    {
-        move = playerControls.Player.Move;
-        move.Enable();
-
-        fire = playerControls.Player.Fire;
-        fire.Enable();
-        fire.performed += Fire;
-
-        specialFire = playerControls.Player.SpecialFire;
-        specialFire.Enable();
-        specialFire.performed += SpecialFire;
-    }
-
-    void OnDisable()
-    {
-        move.Disable();
-        fire.Disable();
-        specialFire.Disable();
-    }
-
-    void Update()
-    {
-        if (!isFail)
-            moveDirection = move.ReadValue<float>();
-    }
-
-    void FixedUpdate()
-    {
-        if (isFail)
-            rb.velocity = Vector2.zero; // we can't move when we loss
-        else
-            rb.velocity = new Vector2(0, moveDirection * moveSpeed); // move Up or Down
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("EnemyBullet"))
+        private void OnEnable()
         {
-            Destroy(collision.gameObject);  // Destroy Bullet
-            PlayerHit();
-        }
-    }
+            _move = _playerControls.Player.Move;
+            _move.Enable();
 
-    void Fire(InputAction.CallbackContext context)
-    {
-        // can't fire when we loss
-        if (!isFail)
+            _fire = _playerControls.Player.Fire;
+            _fire.Enable();
+            _fire.performed += Fire;
+
+            _specialFire = _playerControls.Player.SpecialFire;
+            _specialFire.Enable();
+            _specialFire.performed += SpecialFire;
+        }
+
+        private void OnDisable()
         {
-            auSource.PlayOneShot(shootClip);
-            Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, 90));
+            _move.Disable();
+            _fire.Disable();
+            _specialFire.Disable();
         }
-    }
 
-    void SpecialFire(InputAction.CallbackContext context)
-    {
-        if (!isFail)
+        private void Update()
         {
-            auSource.PlayOneShot(shootClip);
-            Invoke(nameof(SpecialAttack), 0);
-            Invoke(nameof(SpecialAttack), 0.1f);
-            Invoke(nameof(SpecialAttack), 0.2f);
+            if (!_isFail)
+                _moveDirection = _move.ReadValue<float>();
         }
-    }
 
-    void SpecialAttack() => Instantiate(specialBullet, transform.position, Quaternion.Euler(0, 0, 90));
-
-    void PlayerHit()
-    {
-        // disable components
-        isFail = true;
-        sr.enabled = false;
-        Destroy(turbo);
-        auSource.Pause();
-
-        /* * * Best score check * * */
-        actualScore = int.Parse(scoreTxt.text);
-        // if we already have best score
-        if (PlayerPrefs.HasKey("bestScore"))
+        private void FixedUpdate()
         {
-            if (actualScore > bestScoreValue)
-                PlayerPrefs.SetInt("bestScore", actualScore);
+            if (_isFail)
+                _rb.velocity = Vector2.zero; // we can't move when we lost
+            else
+                _rb.velocity = new Vector2(0, _moveDirection * moveSpeed); // move Up or Down
         }
-        // if best score doesn't exist
-        else
-            PlayerPrefs.SetInt("bestScore", actualScore);
 
-        Instantiate(explosion, transform.position, Quaternion.identity);
-        Invoke(nameof(restartGame), 1.2f);
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("EnemyBullet"))
+            {
+                Destroy(collision.gameObject); // Destroy Bullet
+                PlayerHit();
+            }
+        }
+
+        private void Fire(InputAction.CallbackContext context)
+        {
+            // can't fire when we lost
+            if (!_isFail)
+            {
+                _auSource.PlayOneShot(shootClip);
+                Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, 90));
+            }
+        }
+
+        private void SpecialFire(InputAction.CallbackContext context)
+        {
+            if (!_isFail)
+            {
+                _auSource.PlayOneShot(shootClip);
+                Invoke(nameof(SpecialAttack), 0);
+                Invoke(nameof(SpecialAttack), 0.1f);
+                Invoke(nameof(SpecialAttack), 0.2f);
+            }
+        }
+
+        private void SpecialAttack() => Instantiate(specialBullet, transform.position, Quaternion.Euler(0, 0, 90));
+
+        private void PlayerHit()
+        {
+            // disable components
+            _isFail = true;
+            _sr.enabled = false;
+            Destroy(turbo);
+            _auSource.Pause();
+
+            /* * * Best score check * * */
+            _actualScore = int.Parse(_scoreTxt.text);
+            // if we already have best score
+            if (PlayerPrefs.HasKey("bestScore"))
+            {
+                if (_actualScore > _bestScoreValue)
+                    PlayerPrefs.SetInt("bestScore", _actualScore);
+            }
+            // if best score doesn't exist
+            else
+                PlayerPrefs.SetInt("bestScore", _actualScore);
+
+            Instantiate(explosion, transform.position, Quaternion.identity);
+            Invoke(nameof(RestartGame), 1.2f);
+        }
+
+        private void RestartGame() => SceneManager.LoadScene("SpaceShooter");
     }
-
-    void restartGame() => SceneManager.LoadScene("SpaceShooter");
 }

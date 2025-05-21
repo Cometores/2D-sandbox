@@ -1,47 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
-/* * * Script, that spawns enemies and passes them the necessary variables * * */
-public class EnemySpawner : MonoBehaviour
+namespace SpaceShooter
 {
-    [SerializeField] GameObject bottomLeft;     // Spawn Edge 1
-    [SerializeField] GameObject topRight;       // Spawn Edge 2
-    [SerializeField] GameObject bossLogic;      // pass to the enemy and then to the boss
-    [SerializeField] GameObject score;
-    [SerializeField] GameObject[] enemy;
-
-    int enemyCnt;
-    int actualEnemyI;
-
-    TextMeshProUGUI scoreTxt;
-    Vector3 xyMax;
-    Vector3 xyMin;
-
-    void Start()
+    /// <summary>
+    /// Represents a class responsible for spawning enemy objects in a game and passing .
+    /// </summary>
+    public class EnemySpawner : MonoBehaviour
     {
-        xyMax = topRight.transform.position;
-        xyMin = bottomLeft.transform.position;
+        [SerializeField] private GameObject bottomLeft;     // Spawn Edge 1
+        [SerializeField] private GameObject topRight;       // Spawn Edge 2
+        [SerializeField] private GameObject bossLogic;      // pass to the enemy and then to the boss
+        [SerializeField] private GameObject score;
+        [SerializeField] private GameObject[] enemy;
 
-        enemyCnt = enemy.Length;
+        private int _enemyCnt;
+        private int _actualEnemyI;
 
-        scoreTxt = score.GetComponent<TextMeshProUGUI>();
-        Spawner();
-    }
+        private TextMeshProUGUI _scoreTxt;
+        private Vector3 _xyMax;
+        private Vector3 _xyMin;
 
-    void Spawner()
-    {
-        Vector3 spawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);  // random position from bounds
-        GameObject newEnemy = Instantiate(enemy[actualEnemyI], spawnPos, Quaternion.Euler(0,0,-90)); // spawn enemy
-        actualEnemyI = (actualEnemyI + 1) % enemyCnt;
+        private void Start()
+        {
+            _xyMax = topRight.transform.position;
+            _xyMin = bottomLeft.transform.position;
 
-        // transfer variables to the enemy
-        var enemyScript = newEnemy.GetComponent<EnemyActions>();
-        enemyScript.scoreTxt = scoreTxt;
-        enemyScript.bossLogic = bossLogic;
+            _enemyCnt = enemy.Length;
+
+            _scoreTxt = score.GetComponent<TextMeshProUGUI>();
+            Spawner();
+        }
+
+        private void Spawner()
+        {
+            // random spawn position from bounds
+            Vector3 spawnPos = new Vector3(Random.Range(_xyMin.x, _xyMax.x), Random.Range(_xyMin.y, _xyMax.y), 0); 
+            
+            // spawn enemy
+            GameObject newEnemy = Instantiate(enemy[_actualEnemyI], spawnPos, Quaternion.Euler(0,0,-90));
+            _actualEnemyI = (_actualEnemyI + 1) % _enemyCnt;
+
+            // transfer variables to the enemy
+            var enemyScript = newEnemy.GetComponent<EnemyActions>();
+            enemyScript.scoreTxt = _scoreTxt;
+            enemyScript.bossLogic = bossLogic;
         
-        Invoke(nameof(Spawner), 2);
+            Invoke(nameof(Spawner), 2);
+        }
     }
 }

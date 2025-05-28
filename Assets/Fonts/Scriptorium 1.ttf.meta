@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 8edf8c0a37273ae4eafd2401c7326469
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Scriptorium
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: bff52df53e6fc544f80c6d5bbe31faf2, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

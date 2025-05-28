@@ -1,57 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 /*** Script for Cheatcode Lockdown ***/
 /* by pressing "zxc" - animal with a Mask runs across the screen */
-public class Lockdown : CheatProofClass
+namespace AnimalDisco
 {
-    [SerializeField] GameObject lockdownAnimal;     // our animal with mask
-    [SerializeField] string cheatCode = "zxc";   // cheat-code to type
-    int index;  // index of the currently readable letter
-    int lenCode; // lenght of cheatCode
-
-    Camera camMain;
-
-
-    void Start()
+    public class Lockdown : CheatProofClass
     {
-        lenCode = cheatCode.Length;
-        index = 0;
-        camMain = Camera.main;
-    }
+        [SerializeField] private GameObject lockdownAnimal;     // our animal with mask
+        [SerializeField] private string cheatCode = "zxc";   // cheat-code to type
+        private int index;  // index of the currently readable letter
+        private int lenCode; // lenght of cheatCode
+
+        private Camera camMain;
 
 
-    void Update()
-    {
-        int cheatProofVal = CheatProof(cheatCode, index, lenCode);
-        switch (cheatProofVal)
+        private void Start()
         {
-            case 1:
-                /* Our Cheatcode execution */
-                Vector3 spawnVector = new Vector3(0, 0.5f, 0); // left side of screen (x, y)
-                var spawnPos = camMain.ViewportToWorldPoint(spawnVector);
-                spawnPos.z = 0;
+            lenCode = cheatCode.Length;
+            index = 0;
+            camMain = Camera.main;
+        }
 
-                Instantiate(lockdownAnimal, spawnPos, Quaternion.identity);
 
-                index = 0;
-                break;
+        private void Update()
+        {
+            int cheatProofVal = CheatProof(cheatCode, index, lenCode);
+            switch (cheatProofVal)
+            {
+                case 1:
+                    /* Our Cheatcode execution */
+                    Vector3 spawnVector = new Vector3(0, 0.5f, 0); // left side of screen (x, y)
+                    var spawnPos = camMain.ViewportToWorldPoint(spawnVector);
+                    spawnPos.z = 0;
 
-            case 0:
-                // correct letter
-                index++;
-                break;
+                    Instantiate(lockdownAnimal, spawnPos, Quaternion.identity);
 
-            case -1:
-                // wrong letter
-                index = 0;
-                break;
+                    index = 0;
+                    break;
 
-            default:
-                // frame without letter
-                break;
+                case 0:
+                    // correct letter
+                    index++;
+                    break;
+
+                case -1:
+                    // wrong letter
+                    index = 0;
+                    break;
+
+                default:
+                    // frame without letter
+                    break;
+            }
         }
     }
 }

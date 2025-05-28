@@ -12,12 +12,12 @@ namespace DungeonRPG
         private Rigidbody2D _rb;
         private Animator _anim;
 
-        [Header("Movement")] [SerializeField] float speed = 5f;
-        [SerializeField] float runMultiplier = 1.5f;
+        [Header("Movement")] [SerializeField] private float speed = 5f;
+        [SerializeField] private float runMultiplier = 1.5f;
         private Vector2 _moveVector;
 
-        [SerializeField] GameObject teleportOne; // Position after First Door
-        [SerializeField] GameObject teleportTwo; // Position after Second Door
+        [SerializeField] private GameObject teleportOne; // Position after First Door
+        [SerializeField] private GameObject teleportTwo; // Position after Second Door
         private static Vector3 _afterFightPos; // Position near slime to safe
         private bool _isFirstSlime; // Is player near First Slime
         private bool _isSecondSlime; // Is player near Second Slime

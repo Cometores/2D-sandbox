@@ -1,56 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /* Cheat code that makes all npcs move towards the character. */
-public class PursuitCheat : CheatProofClass
+namespace AnimalDisco
 {
-    [SerializeField] GameObject npcArray;
-    [SerializeField] GameObject player;
-    [SerializeField] string cheatCode = "pursuit";   // cheat-code to type
-    int index;  // index of the currently readable letter
-    int lenCode; // lenght of cheatCode
-
-    void Start()
+    public class PursuitCheat : CheatProofClass
     {
-        lenCode = cheatCode.Length;
-        index = 0;
-    }
+        [SerializeField] private GameObject npcArray;
+        [SerializeField] private GameObject player;
+        [SerializeField] private string cheatCode = "pursuit";   // cheat-code to type
+        private int index;  // index of the currently readable letter
+        private int lenCode; // lenght of cheatCode
 
-
-    void Update()
-    {
-        int cheatProofVal = CheatProof(cheatCode, index, lenCode);
-        switch (cheatProofVal)
+        private void Start()
         {
-            case 1:
-                /* Our Cheatcode execution */
-                PursuitEnable();
-                index = 0;
-                break;
-
-            case 0:
-                // correct letter
-                index++;
-                break;
-
-            case -1:
-                // wrong letter
-                index = 0;
-                break;
-
-            default:
-                // frame without letter
-                break;
+            lenCode = cheatCode.Length;
+            index = 0;
         }
-    }
 
-    void PursuitEnable()
-    {
-        foreach (Transform nps in npcArray.transform)
+
+        private void Update()
         {
-            nps.GetComponent<PursuitMovement>().player = player;
-            nps.GetComponent<PursuitMovement>().enabled = true;
+            int cheatProofVal = CheatProof(cheatCode, index, lenCode);
+            switch (cheatProofVal)
+            {
+                case 1:
+                    /* Our Cheatcode execution */
+                    PursuitEnable();
+                    index = 0;
+                    break;
+
+                case 0:
+                    // correct letter
+                    index++;
+                    break;
+
+                case -1:
+                    // wrong letter
+                    index = 0;
+                    break;
+
+                default:
+                    // frame without letter
+                    break;
+            }
+        }
+
+        private void PursuitEnable()
+        {
+            foreach (Transform nps in npcArray.transform)
+            {
+                nps.GetComponent<PursuitMovement>().player = player;
+                nps.GetComponent<PursuitMovement>().enabled = true;
+            }
         }
     }
 }

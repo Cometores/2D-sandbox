@@ -1,31 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 /* * * A script that creates the feeling of lights going off in room 4. * * *
  * * * Works almost exactly like LightAnimation Script * * */
-public class LightOff : MonoBehaviour
+namespace HorrorGame
 {
-    Image lightOn; // A picture of a lighter room
-    [SerializeField] float animationSpeed = 0.5f;
-    float transp;
-
-    void Awake() => lightOn = GetComponent<Image>();
-
-
-    private void OnEnable()
+    public class LightOff : MonoBehaviour
     {
-        transp = 1;
-        lightOn.enabled = true;
-    }
+        private Image _lightOn; // A picture of a lighter room
+        [SerializeField] private float animationSpeed = 0.5f;
+        private float _transp;
+
+        private void Awake() => _lightOn = GetComponent<Image>();
 
 
-    void Update()
-    {
-        if (transp <= 0) lightOn.enabled = false;
+        private void OnEnable()
+        {
+            _transp = 1;
+            _lightOn.enabled = true;
+        }
 
-        transp += -animationSpeed * Time.deltaTime;
-        lightOn.color = new Color(1, 1, 1, transp);
+
+        private void Update()
+        {
+            if (_transp <= 0) _lightOn.enabled = false;
+
+            _transp += -animationSpeed * Time.deltaTime;
+            _lightOn.color = new Color(1, 1, 1, _transp);
+        }
     }
 }

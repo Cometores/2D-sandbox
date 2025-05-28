@@ -1,33 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ProfessorMovement : MonoBehaviour
+namespace CookieClicker
 {
-    //Coordinates that define a rectangle for movement within it
-    public Vector3 xyMax;
-    public Vector3 xyMin;
+    public class ProfessorMovement : MonoBehaviour
+    {
+        //Coordinates that define a rectangle for movement within it
+        public Vector3 xyMax;
+        public Vector3 xyMin;
 
-    Vector3 newPosition;// Position for moving forward
+        private Vector3 _newPosition;// Position for moving forward
 
-    [SerializeField] float walkSpeed = 1f;
-    int direction = 1;
+        [SerializeField] private float walkSpeed = 1f;
+        private int _direction = 1;
 
-    SpriteRenderer sr;
+        private SpriteRenderer _sr;
 
-    void Awake() => sr = GetComponent<SpriteRenderer>();
+        private void Awake() => _sr = GetComponent<SpriteRenderer>();
 
-    void Update()
-    {   
-        newPosition = (transform.position + Vector3.up * walkSpeed * Time.deltaTime * direction);
-        //Restrict the scientist's exit from the rectangle with the clamp function
-        transform.position = new Vector3(Mathf.Clamp(newPosition.x, xyMin.x, xyMax.x), Mathf.Clamp(newPosition.y, xyMin.y, xyMax.y), 0);
+        private void Update()
+        {   
+            _newPosition = (transform.position + Vector3.up * (walkSpeed * Time.deltaTime * _direction));
+            //Restrict the scientist's exit from the rectangle with the clamp function
+            transform.position = new Vector3(Mathf.Clamp(_newPosition.x, xyMin.x, xyMax.x), Mathf.Clamp(_newPosition.y, xyMin.y, xyMax.y), 0);
 
-        // Change movement and sprite direction if necessary
-        if (newPosition.y >= xyMax.y || newPosition.y <= xyMin.y)
-        {
-            direction *= -1;
-            sr.flipX = !sr.flipX;
+            // Change movement and sprite direction if necessary
+            if (_newPosition.y >= xyMax.y || _newPosition.y <= xyMin.y)
+            {
+                _direction *= -1;
+                _sr.flipX = !_sr.flipX;
+            }
         }
     }
 }

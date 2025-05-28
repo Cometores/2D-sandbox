@@ -1,24 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
-public class RubButton : Bank, IPointerDownHandler
+namespace CookieClicker
 {
-    [SerializeField] GameObject incText;
-    Camera camMain;
-    private void Awake()
+    public class RubButton : Bank, IPointerDownHandler
     {
-        camMain = Camera.main;
-    }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        GameObject newIncounterText = Instantiate(incText, Input.mousePosition, Quaternion.identity);
-        newIncounterText.GetComponent<TextMeshProUGUI>().text = $"+{clickPrice}";
-        newIncounterText.transform.SetParent(transform);
+        [SerializeField] private GameObject incText;
+        private Camera _camMain;
+    
+        private void Awake()
+        {
+            _camMain = Camera.main;
+        }
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Vector3 mousePos = Mouse.current.position.ReadValue();
+            GameObject newIncounterText = Instantiate(incText, mousePos, Quaternion.identity);
+            newIncounterText.GetComponent<TextMeshProUGUI>().text = $"+{ClickPrice}";
+            newIncounterText.transform.SetParent(transform);
 
-        Bank.account += clickPrice;
+            Bank.Account += ClickPrice;
+        }
     }
 }

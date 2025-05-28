@@ -1,55 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 /*** Script for Cheatcode DiscoBg ***/
 /* by pressing "light" - background color changes every 0.3s */
-public class DiscoBg : CheatProofClass
+namespace AnimalDisco
 {
-    [SerializeField] GameObject background;
-
-    [SerializeField] string cheatCode = "light";   // cheat-code to type
-    int index;  // index of the currently readable letter
-    int lenCode; // lenght of cheatCode
-
-    bool isActive;
-
-
-    void Start()
+    public class DiscoBg : CheatProofClass
     {
-        lenCode = cheatCode.Length;
-        index = 0;
-    }
+        [SerializeField] private GameObject background;
 
-    void ChangeLight() => background.GetComponent<SpriteRenderer>().color = Random.ColorHSV(0f, 1f, 0.75f, 1f, 1f, 1f);
+        [SerializeField] private string cheatCode = "light";   // cheat-code to type
+        private int index;  // index of the currently readable letter
+        private int lenCode; // lenght of cheatCode
 
-    void Update()
-    {
-        int cheatProofVal = CheatProof(cheatCode, index, lenCode);
-        switch (cheatProofVal)
+        private bool isActive;
+
+
+        private void Start()
         {
-            case 1:
-                // cheatcode in action
-                isActive = !isActive;
-                if (isActive) InvokeRepeating("ChangeLight", 0.3f, 0.3f);
-                else CancelInvoke();
-                index = 0;
-                break;
+            lenCode = cheatCode.Length;
+            index = 0;
+        }
 
-            case 0:
-                // correct letter
-                index++;
-                break;
+        private void ChangeLight() => background.GetComponent<SpriteRenderer>().color = Random.ColorHSV(0f, 1f, 0.75f, 1f, 1f, 1f);
 
-            case -1:
-                // wrong letter
-                index = 0;
-                break;
+        private void Update()
+        {
+            int cheatProofVal = CheatProof(cheatCode, index, lenCode);
+            switch (cheatProofVal)
+            {
+                case 1:
+                    // cheatcode in action
+                    isActive = !isActive;
+                    if (isActive) InvokeRepeating("ChangeLight", 0.3f, 0.3f);
+                    else CancelInvoke();
+                    index = 0;
+                    break;
 
-            default:
-                // frame without letter
-                break;
+                case 0:
+                    // correct letter
+                    index++;
+                    break;
+
+                case -1:
+                    // wrong letter
+                    index = 0;
+                    break;
+
+                default:
+                    // frame without letter
+                    break;
+            }
         }
     }
 }

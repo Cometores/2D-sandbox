@@ -1,37 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class PlusNumberAnimation : MonoBehaviour
+namespace CookieClicker
 {
-    bool isTransp;
-    float transp = 1;
-    [SerializeField] float moveSpeed = 20;
-    TextMeshProUGUI txt;
-
-    void Start()
+    public class PlusNumberAnimation : MonoBehaviour
     {
-        Invoke(nameof(SetTransp), 0.5f);
-        txt = GetComponent<TextMeshProUGUI>();
-    }
+        private bool _isTransp;
+        private float _transp = 1;
+        [SerializeField] private float moveSpeed = 20;
+        private TextMeshProUGUI _txt;
 
-    void Update()
-    {
-        transform.position += (Vector3.up * Time.deltaTime * moveSpeed);
-        if (isTransp)
+        private void Start()
         {
-            transp -= Time.deltaTime;
-            txt.color = new Color(1, 1, 1, transp);
+            Invoke(nameof(SetTransp), 0.5f);
+            _txt = GetComponent<TextMeshProUGUI>();
         }
-        if (transp <= 0)
-            Destroy(gameObject);
-     }
+
+        private void Update()
+        {
+            transform.position += (Vector3.up * (Time.deltaTime * moveSpeed));
+            if (_isTransp)
+            {
+                _transp -= Time.deltaTime;
+                _txt.color = new Color(1, 1, 1, _transp);
+            }
+            if (_transp <= 0)
+                Destroy(gameObject);
+        }
 
 
-    void SetTransp()
-    {
-        isTransp = true;
+        private void SetTransp()
+        {
+            _isTransp = true;
+        }
+
     }
-
 }

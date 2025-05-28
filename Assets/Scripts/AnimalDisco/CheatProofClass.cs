@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /* * * A class for checking any cheat code * * */
-public class CheatProofClass : MonoBehaviour
+namespace AnimalDisco
 {
-    protected static int CheatProof(string cheatCode, int index, int lenCode)
+    public class CheatProofClass : MonoBehaviour
     {
-        if (Input.anyKeyDown)
+        protected static int CheatProof(string cheatCode, int index, int lenCode)
         {
-            if (Input.GetKeyDown((KeyCode)cheatCode[index]))
+            if (Input.anyKeyDown)
             {
-                if (index + 1 == lenCode) return 1; // cheat code entered successfully
-                return 0; // correct cheat code letter
+                if (Input.GetKeyDown((KeyCode)cheatCode[index]))
+                {
+                    if (index + 1 == lenCode) return 1; // cheat code entered successfully
+                    return 0; // correct cheat code letter
+                }
+                else return -1; // wrong letter
             }
-            else return -1; // wrong letter
+            return -2;
         }
-        return -2;
     }
 }

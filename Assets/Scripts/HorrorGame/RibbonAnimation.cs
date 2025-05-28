@@ -1,37 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 /* * * Ribbon animation in the last room. Uses "fill" * * */
-public class RibbonAnimation : MonoBehaviour
+namespace HorrorGame
 {
-    [SerializeField] GameObject leftRibbon;
-    [SerializeField] GameObject rightRibbon;
-
-    Image leftImg;
-    Image rightImg;
-
-    [SerializeField] float speed = 3f;
-
-    private void Awake()
+    public class RibbonAnimation : MonoBehaviour
     {
-        leftImg = leftRibbon.GetComponent<Image>();
-        rightImg = rightRibbon.GetComponent<Image>();
-    }
+        [SerializeField] private GameObject leftRibbon;
+        [SerializeField] private GameObject rightRibbon;
 
-    void Start() => StartCoroutine(RibbonFill());
+        private Image _leftImg;
+        private Image _rightImg;
 
+        [SerializeField] private float speed = 3f;
 
-    IEnumerator RibbonFill()
-    {
-        yield return new WaitForSeconds(0.7f);
-        while (true)
+        private void Awake()
         {
-            if (rightImg.fillAmount == 1) StopAllCoroutines();
-            leftImg.fillAmount += speed * Time.deltaTime;
-            rightImg.fillAmount += speed * Time.deltaTime;
-            yield return null;
+            _leftImg = leftRibbon.GetComponent<Image>();
+            _rightImg = rightRibbon.GetComponent<Image>();
+        }
+
+        private void Start() => StartCoroutine(RibbonFill());
+
+
+        private IEnumerator RibbonFill()
+        {
+            yield return new WaitForSeconds(0.7f);
+            while (true)
+            {
+                if (_rightImg.fillAmount == 1) StopAllCoroutines();
+                _leftImg.fillAmount += speed * Time.deltaTime;
+                _rightImg.fillAmount += speed * Time.deltaTime;
+                yield return null;
+            }
         }
     }
 }

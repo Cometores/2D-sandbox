@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /* * * plays the clip after some number of seconds, when you enable Game object * * */
-public class PlayClipAfter : MonoBehaviour
+namespace HorrorGame
 {
-    AudioSource auSource;
-    [SerializeField] AudioClip clip;
-    [SerializeField] float seconds;
+    public class PlayClipAfter : MonoBehaviour
+    {
+        private AudioSource _auSource;
+        [SerializeField] private AudioClip clip;
+        [SerializeField] private float seconds;
 
-    void Awake() => auSource = GetComponent<AudioSource>();
+        private void Awake() => _auSource = GetComponent<AudioSource>();
 
-    void OnEnable() => Invoke(nameof(PlayClip), seconds);
+        private void OnEnable() => Invoke(nameof(PlayClip), seconds);
 
-    void PlayClip() => auSource.PlayOneShot(clip);
+        private void PlayClip() => _auSource.PlayOneShot(clip);
+    }
 }

@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class playEndMusic : MonoBehaviour
+namespace HorrorGame
 {
-    [SerializeField] GameObject mainGameObject;
-    AudioSource auSource;
-    [SerializeField] AudioClip endClip;
-
-    private void Awake() => auSource = mainGameObject.GetComponent<AudioSource>();
-
-    void OnEnable()
+    public class PlayEndMusic : MonoBehaviour
     {
-        auSource.clip = endClip;
-        auSource.Play();
+        [SerializeField] private GameObject mainGameObject;
+        private AudioSource _auSource;
+        [SerializeField] private AudioClip endClip;
+
+        private void Awake() => _auSource = mainGameObject.GetComponent<AudioSource>();
+
+        private void OnEnable()
+        {
+            _auSource.clip = endClip;
+            _auSource.Play();
+        }
     }
 }

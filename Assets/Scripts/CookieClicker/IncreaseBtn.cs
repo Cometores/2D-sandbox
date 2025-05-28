@@ -1,42 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class IncreaseBtn : Bank
+namespace CookieClicker
 {
-    [SerializeField] Multiplier clickMultiplier;
-
-    [SerializeField] GameObject clickCounterObj;
-    [SerializeField] GameObject clickCostObj;
-
-    static TextMeshProUGUI clickCounterText;
-    static TextMeshProUGUI clickCostText;
-
-    int normalClickCost;
-    int clickCnt;
-
-    void Awake()
+    public class IncreaseBtn : Bank
     {
-        normalClickCost = clickMultiplier.baseCost;
+        [SerializeField] private Multiplier clickMultiplier;
+        [SerializeField] private GameObject clickCounterObj;
+        [SerializeField] private GameObject clickCostObj;
 
-        clickCounterText = clickCounterObj.GetComponent<TextMeshProUGUI>();
-        clickCostText = clickCostObj.GetComponent<TextMeshProUGUI>();
-    }
+        private static TextMeshProUGUI _clickCounterText;
+        private static TextMeshProUGUI _clickCostText;
 
-    public void IncreaseOnClick()
-    {
-        if (Bank.account >= normalClickCost && clickCnt < clickMultiplier.maxAmount)
+        private int _normalClickCost;
+        private int _clickCnt;
+
+        private void Awake()
         {
-            Bank.account -= normalClickCost;
+            _normalClickCost = clickMultiplier.baseCost;
 
-            // Cost changes && amount changes
-            normalClickCost = (int)(clickMultiplier.baseCost * Mathf.Pow(clickMultiplier.multiplier, clickCnt));
-            clickCnt++;
+            _clickCounterText = clickCounterObj.GetComponent<TextMeshProUGUI>();
+            _clickCostText = clickCostObj.GetComponent<TextMeshProUGUI>();
+        }
 
-            clickCounterText.text = $"{clickCnt}";
-            clickCostText.text = $"Cost: {normalClickCost} ˆ";
-            Bank.clickPrice++;
+        public void IncreaseOnClick()
+        {
+            if (Account >= _normalClickCost && _clickCnt < clickMultiplier.maxAmount)
+            {
+                Account -= _normalClickCost;
+
+                // Cost changes && amount changes
+                _normalClickCost = (int)(clickMultiplier.baseCost * Mathf.Pow(clickMultiplier.multiplier, _clickCnt));
+                _clickCnt++;
+
+                _clickCounterText.text = $"{_clickCnt}";
+                _clickCostText.text = $"Cost: {_normalClickCost} ï¿½";
+                ClickPrice++;
+            }
         }
     }
 }

@@ -1,58 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class ProfessorSpawner : Bank
+namespace CookieClicker
 {
-    [SerializeField] Multiplier professorMultiplier;
-    [SerializeField] GameObject professor;
-    [SerializeField] GameObject max;
-    [SerializeField] GameObject min;
-
-    Vector3 xyMax;
-    Vector3 xyMin;
-
-    [SerializeField] GameObject professorCounterObj;
-    [SerializeField] GameObject professorCostObj;
-
-    static TextMeshProUGUI professorCounterText;
-    static TextMeshProUGUI professorCostText;
-
-    int normalProfessortCost;
-    int professorCnt;
-
-    void Awake()
+    public class ProfessorSpawner : Bank
     {
-        normalProfessortCost = professorMultiplier.baseCost;
-        xyMax = max.transform.position;
-        xyMin = min.transform.position;
+        [SerializeField] private Multiplier professorMultiplier;
+        [SerializeField] private GameObject professor;
+        [SerializeField] private GameObject max;
+        [SerializeField] private GameObject min;
 
-        professorCounterText = professorCounterObj.GetComponent<TextMeshProUGUI>();
-        professorCostText = professorCostObj.GetComponent<TextMeshProUGUI>();
-    }
+        private Vector3 xyMax;
+        private Vector3 xyMin;
 
-    public void ProfessorOnClick()
-    {
-        if (Bank.account >= normalProfessortCost && professorCnt < professorMultiplier.maxAmount)
+        [SerializeField] private GameObject professorCounterObj;
+        [SerializeField] private GameObject professorCostObj;
+
+        private static TextMeshProUGUI professorCounterText;
+        private static TextMeshProUGUI professorCostText;
+
+        private int normalProfessortCost;
+        private int professorCnt;
+
+        private void Awake()
         {
-            // Spawn Professor
-            Vector3 newSpawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);
-            professor.GetComponent<ProfessorMovement>().xyMin = xyMin;
-            professor.GetComponent<ProfessorMovement>().xyMax = xyMax;
-            Instantiate(professor, newSpawnPos, Quaternion.identity);
+            normalProfessortCost = professorMultiplier.baseCost;
+            xyMax = max.transform.position;
+            xyMin = min.transform.position;
 
-            Bank.account -= normalProfessortCost;
+            professorCounterText = professorCounterObj.GetComponent<TextMeshProUGUI>();
+            professorCostText = professorCostObj.GetComponent<TextMeshProUGUI>();
+        }
 
-            // Cost changes && amount changes
-            normalProfessortCost = (int)(professorMultiplier.baseCost * Mathf.Pow(professorMultiplier.multiplier, professorCnt));
-            professorCnt++;
+        public void ProfessorOnClick()
+        {
+            if (Bank.Account >= normalProfessortCost && professorCnt < professorMultiplier.maxAmount)
+            {
+                // Spawn Professor
+                Vector3 newSpawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);
+                professor.GetComponent<ProfessorMovement>().xyMin = xyMin;
+                professor.GetComponent<ProfessorMovement>().xyMax = xyMax;
+                Instantiate(professor, newSpawnPos, Quaternion.identity);
 
-            professorCounterText.text = $"{professorCnt}";
-            professorCostText.text = $"Cost: {normalProfessortCost} ˆ";
+                Bank.Account -= normalProfessortCost;
 
-            Bank.amountPerSec += Bank.studentPrice;
-            Bank.UpdateAmountPerSec();
+                // Cost changes && amount changes
+                normalProfessortCost = (int)(professorMultiplier.baseCost * Mathf.Pow(professorMultiplier.multiplier, professorCnt));
+                professorCnt++;
+
+                professorCounterText.text = $"{professorCnt}";
+                professorCostText.text = $"Cost: {normalProfessortCost} ï¿½";
+
+                Bank.AmountPerSec += Bank.StudentPrice;
+                Bank.UpdateAmountPerSec();
+            }
         }
     }
 }

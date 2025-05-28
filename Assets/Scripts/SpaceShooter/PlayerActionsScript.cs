@@ -15,7 +15,7 @@ namespace SpaceShooter
         private float _moveDirection = 0;
         private bool _isFail;
 
-        private PlayerInputActions _playerControls;
+        private SS_InputActions _playerControls;
         private InputAction _move;
         private InputAction _fire;
         private InputAction _specialFire;
@@ -40,7 +40,7 @@ namespace SpaceShooter
             _sr = GetComponent<SpriteRenderer>();
             _rb = GetComponent<Rigidbody2D>();
 
-            _playerControls = new PlayerInputActions();
+            _playerControls = new SS_InputActions();
 
             _scoreTxt = scoreObj.GetComponent<TextMeshProUGUI>();
             _bestScoreTxt = bestScoreObj.GetComponent<TextMeshProUGUI>();

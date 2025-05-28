@@ -1,30 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 /* * * Script for eye-rolling animation in rooms 2, 5, 10, 14 * * */
-public class RotatingEyes : MonoBehaviour
+namespace HorrorGame
 {
-    [SerializeField] GameObject rightEye;
-    [SerializeField] GameObject leftEye;
-
-    Image rightImg;
-    Image leftImg;
-
-    [SerializeField] float rotationSpeed = 2300f;
-
-
-    private void Awake()
+    public class RotatingEyes : MonoBehaviour
     {
-        rightImg = rightEye.GetComponent<Image>();
-        leftImg = leftEye.GetComponent<Image>();
-    }
-    
+        [SerializeField] private GameObject rightEye;
+        [SerializeField] private GameObject leftEye;
 
-    void Update()
-    {
-        rightImg.transform.Rotate(new Vector3(0, 0, rotationSpeed) * Time.deltaTime);
-        leftImg.transform.Rotate(new Vector3(0, 0, -rotationSpeed) * Time.deltaTime);
+        private Image _rightImg;
+        private Image _leftImg;
+
+        [SerializeField] private float rotationSpeed = 2300f;
+
+
+        private void Awake()
+        {
+            _rightImg = rightEye.GetComponent<Image>();
+            _leftImg = leftEye.GetComponent<Image>();
+        }
+
+
+        private void Update()
+        {
+            _rightImg.transform.Rotate(new Vector3(0, 0, rotationSpeed) * Time.deltaTime);
+            _leftImg.transform.Rotate(new Vector3(0, 0, -rotationSpeed) * Time.deltaTime);
+        }
     }
 }

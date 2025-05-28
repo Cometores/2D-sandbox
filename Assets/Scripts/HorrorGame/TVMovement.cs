@@ -1,39 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 /* * * Script for the animation of hitting the TV in room 13 * * */
-public class TVMovement : MonoBehaviour
+namespace HorrorGame
 {
-    Vector3 normalPosition;
-    [SerializeField] float speed = 70;
-    float phase; // phase for sin
-    Image tvImg;
-
-    private void Awake() => tvImg = GetComponent<Image>();
-
-    void OnEnable()
+    public class TVMovement : MonoBehaviour
     {
-        tvImg.enabled = true;
-        normalPosition = transform.position;
-        Invoke(nameof(destoryTv), 0.1f);
-    }
+        private Vector3 _normalPosition;
+        [SerializeField] private float speed = 70;
+        private float _phase; // phase for sin
+        private Image _tvImg;
 
+        private void Awake() => _tvImg = GetComponent<Image>();
 
-    void Update()
-    {
-        if (tvImg.enabled)
+        private void OnEnable()
         {
-            // Use the displacement of the x-coordinate in the sine phase
-            transform.position = normalPosition + Vector3.right * (Mathf.Sin(phase * speed)) * 30;
-            phase += Time.deltaTime;
+            _tvImg.enabled = true;
+            _normalPosition = transform.position;
+            Invoke(nameof(DestroyTv), 0.1f);
         }
-    }
 
-    void destoryTv()
-    {
-        tvImg.enabled = false;
-        transform.position = normalPosition;
+
+        private void Update()
+        {
+            if (_tvImg.enabled)
+            {
+                // Use the displacement of the x-coordinate in the sine phase
+                transform.position = _normalPosition + Vector3.right * ((Mathf.Sin(_phase * speed)) * 30);
+                _phase += Time.deltaTime;
+            }
+        }
+
+        private void DestroyTv()
+        {
+            _tvImg.enabled = false;
+            transform.position = _normalPosition;
+        }
     }
 }

@@ -1,0 +1,94 @@
+{
+    "name": "HG_InputActions",
+    "maps": [
+        {
+            "name": "Keyboard",
+            "id": "97b4a940-beec-4b36-970d-3556952ad163",
+            "actions": [
+                {
+                    "name": "Choice 1",
+                    "type": "Button",
+                    "id": "e9899a48-94fb-41fa-8378-3a2ffc2e297c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Choice 2",
+                    "type": "Button",
+                    "id": "b9da9d89-e4c7-4bbd-a135-562070ed8f73",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Choice 3",
+                    "type": "Button",
+                    "id": "fa185052-ed37-498a-ae03-971cbb6adf4c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Choice 4",
+                    "type": "Button",
+                    "id": "c209918d-fa36-4549-8212-87975acca252",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bd26a768-d203-44cc-83ea-5209a100577c",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Choice 1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b8040ad7-84a5-4d44-94c7-e466fc8b4af1",
+                    "path": "<Keyboard>/2",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Choice 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "591f1822-41a9-4655-a54b-6263ebb00980",
+                    "path": "<Keyboard>/3",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Choice 3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a5fa8c56-e52d-4463-a79a-284c60e3d707",
+                    "path": "<Keyboard>/4",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Choice 4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

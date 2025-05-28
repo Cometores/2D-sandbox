@@ -1,23 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 /* * * A script for lighting animation, which essentially just makes another picture transparent * * *
  * * * Used in rooms 5, 7, 11 * * */
 
-public class LightAnimation : MonoBehaviour
+namespace HorrorGame
 {
-    Image lightImg; // A picture of a lighter room
-    [SerializeField] float animationSpeed = 1.8f;
-    float transp;
-
-    void Awake() => lightImg = GetComponent<Image>();
-
-    void Update()
+    public class LightAnimation : MonoBehaviour
     {
-        transp += animationSpeed * Time.deltaTime;
-        if (transp >= 1 || transp <= 0) animationSpeed *= -1;
-        lightImg.color = new Color(1, 1, 1, transp);
+        private Image _lightImg; // A picture of a lighter room
+        [SerializeField] private float animationSpeed = 1.8f;
+        private float _transp;
+
+        private void Awake() => _lightImg = GetComponent<Image>();
+
+        private void Update()
+        {
+            _transp += animationSpeed * Time.deltaTime;
+            if (_transp >= 1 || _transp <= 0) animationSpeed *= -1;
+            _lightImg.color = new Color(1, 1, 1, _transp);
+        }
     }
 }

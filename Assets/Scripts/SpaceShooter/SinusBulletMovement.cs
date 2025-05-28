@@ -29,6 +29,6 @@ namespace SpaceShooter
             transform.position = new Vector3(transform.position.x, _yPos, 0);
         }
 
-        void OnBecameInvisible() => Destroy(gameObject);
+        private void OnBecameInvisible() => Destroy(gameObject);
     }
 }

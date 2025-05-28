@@ -1,58 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class ScientistSpawner : Bank
+namespace CookieClicker
 {
-    [SerializeField] Multiplier scientistMultiplier;
-    [SerializeField] GameObject scientist;
-    [SerializeField] GameObject max;
-    [SerializeField] GameObject min;
-
-    Vector3 xyMax;
-    Vector3 xyMin;
-
-    [SerializeField] GameObject scientistCounterObj;
-    [SerializeField] GameObject scientistCostObj;
-
-    static TextMeshProUGUI scientistCounterText;
-    static TextMeshProUGUI scientistCostText;
-
-    int normalScientistCost;
-    int scientistCnt;
-
-    void Awake()
+    public class ScientistSpawner : Bank
     {
-        normalScientistCost = scientistMultiplier.baseCost;
-        xyMax = max.transform.position;
-        xyMin = min.transform.position;
+        [SerializeField] private Multiplier scientistMultiplier;
+        [SerializeField] private GameObject scientist;
+        [SerializeField] private GameObject max;
+        [SerializeField] private GameObject min;
 
-        scientistCounterText = scientistCounterObj.GetComponent<TextMeshProUGUI>();
-        scientistCostText = scientistCostObj.GetComponent<TextMeshProUGUI>();
-    }
+        private Vector3 xyMax;
+        private Vector3 xyMin;
 
-    public void ScientistOnClick()
-    {
-        if (Bank.account >= normalScientistCost && scientistCnt < scientistMultiplier.maxAmount)
+        [SerializeField] private GameObject scientistCounterObj;
+        [SerializeField] private GameObject scientistCostObj;
+
+        private static TextMeshProUGUI scientistCounterText;
+        private static TextMeshProUGUI scientistCostText;
+
+        private int normalScientistCost;
+        private int scientistCnt;
+
+        private void Awake()
         {
-            // Spawn Scientist
-            Vector3 newSpawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);
-            scientist.GetComponent<ScientistMovement>().xyMin = xyMin;
-            scientist.GetComponent<ScientistMovement>().xyMax = xyMax;
-            GameObject newScientist = Instantiate(scientist, newSpawnPos, Quaternion.identity);
+            normalScientistCost = scientistMultiplier.baseCost;
+            xyMax = max.transform.position;
+            xyMin = min.transform.position;
 
-            Bank.account -= normalScientistCost;
+            scientistCounterText = scientistCounterObj.GetComponent<TextMeshProUGUI>();
+            scientistCostText = scientistCostObj.GetComponent<TextMeshProUGUI>();
+        }
 
-            // Cost changes && amount changes
-            normalScientistCost = (int)(scientistMultiplier.baseCost * Mathf.Pow(scientistMultiplier.multiplier, scientistCnt));
-            scientistCnt++;
+        public void ScientistOnClick()
+        {
+            if (Bank.Account >= normalScientistCost && scientistCnt < scientistMultiplier.maxAmount)
+            {
+                // Spawn Scientist
+                Vector3 newSpawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);
+                scientist.GetComponent<ScientistMovement>().xyMin = xyMin;
+                scientist.GetComponent<ScientistMovement>().xyMax = xyMax;
+                GameObject newScientist = Instantiate(scientist, newSpawnPos, Quaternion.identity);
 
-            scientistCounterText.text = $"{scientistCnt}";
-            scientistCostText.text = $"Cost: {normalScientistCost} ˆ";
+                Bank.Account -= normalScientistCost;
 
-            Bank.amountPerSec += Bank.studentPrice;
-            Bank.UpdateAmountPerSec();
+                // Cost changes && amount changes
+                normalScientistCost = (int)(scientistMultiplier.baseCost * Mathf.Pow(scientistMultiplier.multiplier, scientistCnt));
+                scientistCnt++;
+
+                scientistCounterText.text = $"{scientistCnt}";
+                scientistCostText.text = $"Cost: {normalScientistCost} ï¿½";
+
+                Bank.AmountPerSec += Bank.StudentPrice;
+                Bank.UpdateAmountPerSec();
+            }
         }
     }
 }

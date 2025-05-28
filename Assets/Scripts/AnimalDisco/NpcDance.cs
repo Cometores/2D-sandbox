@@ -1,39 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NpcDance : DanceMovements
+namespace AnimalDisco
 {
-    int iRand;
-
-    void Start()
+    public class NpcDance : DanceMovements
     {
-        base.Start();
-        InvokeRepeating(nameof(RandomDance), 0f, 3f);
-    }
+        private int iRand;
 
-    void RandomDance()
-    {
-        int newRand = Random.Range(0, 3);
-        if (iRand == newRand) newRand = (newRand + 1) % 3;
-        iRand = newRand;
-
-        switch (iRand)
+        private void Start()
         {
-            case 0:
-                TryToStartPositionDanceMove();
-                break;
-            case 1:
-                TryToStartRotationDanceMove();
-                break;
-            default:
-                TryToStartScalingDanceMove();
-                break;
+            base.Start();
+            InvokeRepeating(nameof(RandomDance), 0f, 3f);
         }
-    }
 
-    void Update()
-    {
-        base.Update();
+        private void RandomDance()
+        {
+            int newRand = Random.Range(0, 3);
+            if (iRand == newRand) newRand = (newRand + 1) % 3;
+            iRand = newRand;
+
+            switch (iRand)
+            {
+                case 0:
+                    TryToStartPositionDanceMove();
+                    break;
+                case 1:
+                    TryToStartRotationDanceMove();
+                    break;
+                default:
+                    TryToStartScalingDanceMove();
+                    break;
+            }
+        }
+
+        private void Update()
+        {
+            base.Update();
+        }
     }
 }

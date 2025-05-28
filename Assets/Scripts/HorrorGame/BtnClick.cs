@@ -1,44 +1,48 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /* * * Script for pressing keys on the phone * * */
-public class BtnClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+namespace HorrorGame
 {
-    protected static int sixCounter;    // amount of button presses 6 for True Ending
-    [SerializeField] GameObject stateScript;  // need to change the state 
-    [SerializeField] Image btnImg;
-    [SerializeField] Sprite unpressedSprite, pressedSprite;
-    [SerializeField] AudioClip compressClip, uncompressClip, soundClip;
-    [SerializeField] AudioSource source;
-
-    public void OnPointerDown(PointerEventData eventData)
+    public class BtnClick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        // click on the button
-        if (gameObject.name == "Btn6") sixCounter++;
-        else sixCounter = 0;
+        [SerializeField] private GameObject stateScript;  // need to change the state 
+        [SerializeField] private Image btnImg;
+        [SerializeField] private Sprite unpressedSprite, pressedSprite;
+        [SerializeField] private AudioClip compressClip, uncompressClip, soundClip;
+        [SerializeField] private AudioSource source;
+        
+        private static int _sixCounter;    // amount of button presses 6 for True Ending
 
-        source.PlayOneShot(soundClip);
-        btnImg.sprite = pressedSprite;
-        source.PlayOneShot(compressClip);
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            // click on the button
+            if (gameObject.name == "Btn6") _sixCounter++;
+            else _sixCounter = 0;
 
-        if (sixCounter == 3) StartCoroutine(TrueEnding());
+            source.PlayOneShot(soundClip);
+            btnImg.sprite = pressedSprite;
+            source.PlayOneShot(compressClip);
+
+            if (_sixCounter == 3) StartCoroutine(TrueEnding());
             
-    }
+        }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        // release the button
-        btnImg.sprite = unpressedSprite;
-        source.PlayOneShot(uncompressClip);
-    }
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            // release the button
+            btnImg.sprite = unpressedSprite;
+            source.PlayOneShot(uncompressClip);
+        }
 
-    IEnumerator TrueEnding()
-    {
-        yield return new WaitForSeconds(0.7f);
-        stateScript.GetComponent<StateScript>().OnChange(StateData.RoomState.Room8_TrueEnding);
+        private IEnumerator TrueEnding()
+        {
+            yield return new WaitForSeconds(0.7f);
+            _sixCounter = 0;
+            stateScript.GetComponent<StateScript>().OnChange(StateData.RoomState.Room8_TrueEnding);
+        }
     }
 }
 

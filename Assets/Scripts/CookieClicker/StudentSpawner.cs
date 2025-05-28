@@ -1,57 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
-public class StudentSpawner : Bank
+namespace CookieClicker
 {
-    [SerializeField] Multiplier studentMultiplier;
-    [SerializeField] GameObject student;
-    [SerializeField] GameObject max;
-    [SerializeField] GameObject min;
-
-    Vector3 xyMax;
-    Vector3 xyMin;
-
-    [SerializeField] GameObject studentCounterObj;
-    [SerializeField] GameObject studentCostObj;
-
-    static TextMeshProUGUI studentCounterText;
-    static TextMeshProUGUI studentCostText;
-
-    int studentCnt;
-    int normalStudentCost;
-
-    void Awake()
+    public class StudentSpawner : Bank
     {
-        normalStudentCost = studentMultiplier.baseCost;
-        xyMax = max.transform.position;
-        xyMin = min.transform.position;
+        [SerializeField] private Multiplier studentMultiplier;
+        [SerializeField] private GameObject student;
+        [SerializeField] private GameObject max;
+        [SerializeField] private GameObject min;
 
-        studentCounterText = studentCounterObj.GetComponent<TextMeshProUGUI>();
-        studentCostText = studentCostObj.GetComponent<TextMeshProUGUI>();
-    }
+        private Vector3 xyMax;
+        private Vector3 xyMin;
 
-    public void StudentOnClick()
-    {
-        if (Bank.account >= normalStudentCost && studentCnt < studentMultiplier.maxAmount)
+        [SerializeField] private GameObject studentCounterObj;
+        [SerializeField] private GameObject studentCostObj;
+
+        private static TextMeshProUGUI studentCounterText;
+        private static TextMeshProUGUI studentCostText;
+
+        private int studentCnt;
+        private int normalStudentCost;
+
+        private void Awake()
         {
-            // Spawn Student
-            Vector3 newSpawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);
-            Instantiate(student, newSpawnPos, Quaternion.identity);
+            normalStudentCost = studentMultiplier.baseCost;
+            xyMax = max.transform.position;
+            xyMin = min.transform.position;
 
-            Bank.account -= studentMultiplier.baseCost;
+            studentCounterText = studentCounterObj.GetComponent<TextMeshProUGUI>();
+            studentCostText = studentCostObj.GetComponent<TextMeshProUGUI>();
+        }
 
-            // Cost changes && amount changes
-            normalStudentCost = (int)(studentMultiplier.baseCost * Mathf.Pow(studentMultiplier.multiplier, studentCnt));
-            studentCnt++;
+        public void StudentOnClick()
+        {
+            if (Bank.Account >= normalStudentCost && studentCnt < studentMultiplier.maxAmount)
+            {
+                // Spawn Student
+                Vector3 newSpawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);
+                Instantiate(student, newSpawnPos, Quaternion.identity);
 
-            studentCounterText.text = $"{studentCnt}";
-            studentCostText.text = $"Cost: {normalStudentCost} ˆ";
+                Bank.Account -= studentMultiplier.baseCost;
 
-            Bank.amountPerSec += Bank.studentPrice;
-            Bank.UpdateAmountPerSec();
+                // Cost changes && amount changes
+                normalStudentCost = (int)(studentMultiplier.baseCost * Mathf.Pow(studentMultiplier.multiplier, studentCnt));
+                studentCnt++;
+
+                studentCounterText.text = $"{studentCnt}";
+                studentCostText.text = $"Cost: {normalStudentCost} ï¿½";
+
+                Bank.AmountPerSec += Bank.StudentPrice;
+                Bank.UpdateAmountPerSec();
+            }
         }
     }
 }

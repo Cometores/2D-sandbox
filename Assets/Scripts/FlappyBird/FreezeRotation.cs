@@ -1,7 +1,10 @@
 using UnityEngine;
 
 /* forbid the special trigger to rotate with the boss. Couldn't find a more elegant way to do it */
-public class FreezeRotation : MonoBehaviour
+namespace FlappyBird
 {
-    void Update() => transform.rotation = Quaternion.identity;
+    public class FreezeRotation : MonoBehaviour
+    {
+        private void Update() => transform.rotation = Quaternion.identity;
+    }
 }

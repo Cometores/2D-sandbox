@@ -1,44 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class Bank : MonoBehaviour
+namespace CookieClicker
 {
-    protected static int account;
-    protected static int amountPerSec;
-    protected static int clickPrice = 1;
-    protected static int studentPrice = 10;
-    protected static int scientistPrice = 20;
-    protected static int professorPrice = 30;
-
-    [SerializeField] GameObject increaseTextObj;
-    [SerializeField] GameObject accountTextObj;
-
-    static TextMeshProUGUI increaseText;
-    static TextMeshProUGUI accountText;
-
-    private void Awake()
+    public class Bank : MonoBehaviour
     {
-        increaseText = increaseTextObj.GetComponent<TextMeshProUGUI>();
-        accountText = accountTextObj.GetComponent<TextMeshProUGUI>();
-        increaseAccount();
-    }
+        protected static int Account;
+        protected static int AmountPerSec;
+        
+        protected static int ClickPrice = 1;
+        protected const int StudentPrice = 10;
+        protected const int ScientistPrice = 20;
+        protected const int ProfessorPrice = 30;
+
+        [SerializeField] private GameObject increaseTextObj;
+        [SerializeField] private GameObject accountTextObj;
+
+        private static TextMeshProUGUI increaseText;
+        private static TextMeshProUGUI accountText;
+
+        private void Awake()
+        {
+            increaseText = increaseTextObj.GetComponent<TextMeshProUGUI>();
+            accountText = accountTextObj.GetComponent<TextMeshProUGUI>();
+            IncreaseAccount();
+        }
 
 
-    protected static void UpdateAmountPerSec()
-    {
-        increaseText.text = $"+ {amountPerSec} ˆ / Second";
-    }
+        protected static void UpdateAmountPerSec()
+        {
+            increaseText.text = $"+ {AmountPerSec} â‚¬ / Second";
+        }
 
-    void increaseAccount()
-    {
-        account += amountPerSec;
-        Invoke(nameof(increaseAccount), 1f);
-    }
+        private void IncreaseAccount()
+        {
+            Account += AmountPerSec;
+            Invoke(nameof(IncreaseAccount), 1f);
+        }
 
-    void Update()
-    {
-        accountText.text = $"{account} ˆ";
+        private void Update()
+        {
+            accountText.text = $"{Account} â‚¬";
+        }
     }
 }

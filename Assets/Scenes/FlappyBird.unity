@@ -1065,8 +1065,9 @@ GameObject:
   - component: {fileID: 1540254368}
   - component: {fileID: 1540254373}
   - component: {fileID: 1540254374}
+  - component: {fileID: 1540254375}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Demon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1089,6 +1090,7 @@ MonoBehaviour:
   jumpClip: {fileID: 8300000, guid: ac131612c36e8e748bd22ce3d6cef641, type: 3}
   hitClip: {fileID: 8300000, guid: 392072988ecdfa04f851714e71978cde, type: 3}
   pointClip: {fileID: 8300000, guid: ef494ee1565118d43baf29a191d68104, type: 3}
+  jumpParticles: {fileID: 2520678621011892056, guid: 4270e7842baff6249aa071f7f08ff558, type: 3}
   flightForce: 6
 --- !u!50 &1540254369
 Rigidbody2D:
@@ -1168,7 +1170,7 @@ SpriteRenderer:
   m_SortingLayerID: -276701307
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: cefb0208a5c399243a87f59484fc78a0, type: 3}
+  m_Sprite: {fileID: -750821369, guid: 4e64888be1a8ae44d9fbe99ef4717940, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1320,6 +1322,26 @@ MonoBehaviour:
   m_DefaultActionMap: Keyboard
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!95 &1540254375
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540254367}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0cef64749f0088d428903b0b9708e7d4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1607585912
 GameObject:
   m_ObjectHideFlags: 0

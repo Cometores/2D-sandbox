@@ -23,6 +23,8 @@ namespace FlappyBird
         [SerializeField] private AudioClip hitClip;
         [SerializeField] private AudioClip pointClip;
 
+        [SerializeField] private ParticleSystem jumpParticles;
+
         [SerializeField] private float flightForce;
         private int scoreCnt;
         private float powerUpTime;
@@ -70,7 +72,7 @@ namespace FlappyBird
                 powerUpTime += Time.deltaTime;
             }
 
-            transform.Rotate(0, 0, -30 * Time.deltaTime);
+            transform.Rotate(0, 0, -12 * Time.deltaTime);
         }
 
         private void Jump(InputAction.CallbackContext context)
@@ -81,6 +83,9 @@ namespace FlappyBird
             _rb.AddForce(Vector2.up * flightForce, ForceMode2D.Impulse);
             _auSource.PlayOneShot(jumpClip);
             transform.rotation = Quaternion.identity;
+            
+            // Particles
+            Instantiate(jumpParticles, transform.position, Quaternion.identity);
         }
 
 

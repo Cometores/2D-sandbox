@@ -3,84 +3,103 @@ using UnityEngine;
 namespace FlappyBird
 {
     /// <summary>
-    /// Controls the movement of the boss character.
+    /// Controls the movement and animation of the boss character.
     /// </summary>
     public class BossMovement : MonoBehaviour
     {
+        #region Fields
+
         private Rigidbody2D _rb;
-        private SpriteRenderer _sr;
+        private SpriteRenderer _spriteRenderer;
 
-        // Boss movement speed
-        [SerializeField] private float speedX;
-        [SerializeField] private float speedY;
+        [Header("Movement")]
+        [SerializeField] private float horizontalSpeed = 3f;
+        [SerializeField] private float verticalSpeed = 2f;
+        [SerializeField] private float upperYLimit = 3.8f;
+        [SerializeField] private float lowerYLimit = -3.4f;
 
-        // Boss rotation variables
+        [Header("Rotation")]
         private float _rotationSpeed;
         private int _rotationDirection = 1;
 
+        [Header("Animation")]
         [SerializeField] private Sprite[] bossSprites;
-        private int _spriteIndex; // actual index in bossSprites array
-        private int _spriteLen;
+        [SerializeField] private float spriteChangeInterval = 0.2f;
+        private int _spriteIndex;
+        private int _spriteCount;
+        private float _animationTimer;
 
-        [SerializeField] private float animationTime; // How often the sprite will change
-        private float _timer; // auxiliary variable for animation
+        #endregion
 
+        #region Unity Methods
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _sr = GetComponent<SpriteRenderer>();
-            _spriteLen = bossSprites.Length;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteCount = bossSprites.Length;
+
+            if (_spriteCount == 0)
+            {
+                Debug.LogWarning("BossMovement: No sprites assigned.");
+                enabled = false;
+            }
         }
 
-
-        // set the initial speed and rotation
         private void Start()
         {
-            RotateUpdate();
-            _rb.velocity = new Vector2(-speedX, speedY);
-        } 
-        
+            _rb.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
+            StartRotationCycle();
+        }
 
         private void FixedUpdate()
         {
-            // Change the movement direction from bottom to top and back, if necessary
-            if (transform.position.y >= 3.8f)
-                _rb.velocity = new Vector2(-speedX, -speedY);
+            if (transform.position.y >= upperYLimit)
+                _rb.velocity = new Vector2(-horizontalSpeed, -verticalSpeed);
 
-            else if (transform.position.y <= -3.4f)
-                _rb.velocity = new Vector2(-speedX, speedY);
+            else if (transform.position.y <= lowerYLimit)
+                _rb.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
         }
-
 
         private void Update()
         {
-            /* * * Sprite animation behavior * * */ 
-            _timer -= Time.deltaTime;
-
-            if (_timer <= 0f)
-            {
-                _spriteIndex = (_spriteIndex + 1) % _spriteLen;
-                _sr.sprite = bossSprites[_spriteIndex];
-                _timer = animationTime;
-            }
-
-            /* * * Rotation Behavior * * */
-            transform.Rotate(new Vector3(0, 0, _rotationSpeed * _rotationDirection) * Time.deltaTime);
+            UpdateSpriteAnimation();
+            Rotate();
         }
 
-
-        private void RotateUpdate()
+        private void OnBecameInvisible()
         {
-            /* change direction and speed at time intervals */
+            Destroy(gameObject);
+        }
+
+        #endregion
+
+        #region Animation & Rotation
+
+        private void UpdateSpriteAnimation()
+        {
+            _animationTimer -= Time.deltaTime;
+
+            if (_animationTimer <= 0f)
+            {
+                _spriteIndex = (_spriteIndex + 1) % _spriteCount;
+                _spriteRenderer.sprite = bossSprites[_spriteIndex];
+                _animationTimer = spriteChangeInterval;
+            }
+        }
+
+        private void Rotate()
+        {
+            transform.Rotate(0f, 0f, _rotationSpeed * _rotationDirection * Time.deltaTime);
+        }
+
+        private void StartRotationCycle()
+        {
             _rotationSpeed = Random.Range(180f, 400f);
             _rotationDirection *= -1;
-
-            // Boss spins random time at random speed
-            Invoke(nameof(RotateUpdate), Random.Range(0.9f, 1.5f));
+            Invoke(nameof(StartRotationCycle), Random.Range(0.9f, 1.5f));
         }
 
-
-        private void OnBecameInvisible() => Destroy(gameObject);
+        #endregion
     }
 }

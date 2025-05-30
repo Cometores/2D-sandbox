@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DungeonRPG/Fight2.unity
     guid: 3797b2ad8b8e43347a03610a353ac2b3
+  - enabled: 1
+    path: Assets/Scenes/FlappyBird.unity
+    guid: 8c3ef8e4fbc74be47b3e18360b9d40b2
   m_configObjects: {}

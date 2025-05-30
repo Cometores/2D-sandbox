@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8356328400374734525}
   - component: {fileID: 8356328400374734526}
   m_Layer: 0
-  m_Name: RockUp
+  m_Name: RockTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 402766503
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2d6d2531d8033eb44a69767aab12f6a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -125,11 +125,14 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.5301346, y: 1.1788955}
-  - {x: -0.25030464, y: 0.11955349}
-  - {x: -0.16617821, y: 0.03153068}
-  - {x: 0.05150868, y: -1.0755244}
-  - {x: 0.17991893, y: -1.0802429}
+  - {x: -0.52327055, y: 1.0519147}
+  - {x: -0.4366532, y: 0.5634673}
+  - {x: -0.34654155, y: 0.6677505}
+  - {x: -0.27559707, y: 0.07279745}
+  - {x: -0.23314515, y: 0.23967056}
+  - {x: -0.15245055, y: -0.24645442}
+  - {x: -0.113223016, y: -0.20038623}
+  - {x: -0.015700042, y: -1.0219003}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0

@@ -10,16 +10,30 @@ namespace FlappyBird
         [SerializeField] private GameObject rockDown;
         [SerializeField] private GameObject boss;
         [SerializeField] private GameObject bonusPill;
+        [SerializeField] private GameObject rocks;
 
         [SerializeField] private GameObject rockUpSpawnPos;
         [SerializeField] private GameObject rockDownSpawnPos;
         [SerializeField] private GameObject bossSpawnPos;
         [SerializeField] private GameObject bonusPillSpawnPos;
+        [SerializeField] private GameObject rocksSpawnPos;
 
+        [SerializeField] private float rocksTimer = 9f;
+        
         private float _spawnCounter;
 
-        private void Start() => InvokeRepeating(nameof(Spawner), 0f, 2f);
+        private void Start()
+        {
+            InvokeRepeating(nameof(Spawner), 0f, 2f);
+            InvokeRepeating(nameof(SpawnRocks), 0f, rocksTimer);
+            
+        }
 
+        private void SpawnRocks()
+        {
+            Instantiate(rocks, rocksSpawnPos.transform.position, Quaternion.identity);
+        }
+        
         private void Spawner()
         {
             _spawnCounter++;

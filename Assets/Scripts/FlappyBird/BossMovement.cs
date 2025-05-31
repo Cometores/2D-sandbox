@@ -84,7 +84,7 @@ namespace FlappyBird
             {
                 _spriteIndex = (_spriteIndex + 1) % _spriteCount;
                 _spriteRenderer.sprite = bossSprites[_spriteIndex];
-                _animationTimer = spriteChangeInterval;
+                _animationTimer = spriteChangeInterval + Random.Range(0f, 0.2f);
             }
         }
 

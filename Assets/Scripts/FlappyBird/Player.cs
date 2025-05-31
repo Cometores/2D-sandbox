@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,7 @@ namespace FlappyBird
         #region Fields
 
         private Rigidbody2D _rb;
+        private Animator _animator;
 
         [FormerlySerializedAs("flightForce")]
         [Header("Movement")]
@@ -39,11 +41,13 @@ namespace FlappyBird
         [SerializeField] private AudioClip hitClip;
         [SerializeField] private AudioClip pointClip;
         private AudioSource _audioSource;
+        private bool _hitPlayed;
 
         [Header("Effects")]
         [SerializeField] private ParticleSystem jumpParticles;
         
         private bool _isFail;
+        private static readonly int Hit = Animator.StringToHash("hit");
 
         #endregion
         
@@ -52,6 +56,7 @@ namespace FlappyBird
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
+            _animator = GetComponent<Animator>();
             _audioSource = GetComponent<AudioSource>();
             _scoreText = score.GetComponent<TextMeshProUGUI>();
             _powerUpText = powerUp.GetComponent<TextMeshProUGUI>();
@@ -91,9 +96,15 @@ namespace FlappyBird
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.name == "Celling") return;
+
+            if (!_hitPlayed)
+            {
+                _audioSource.PlayOneShot(hitClip);
+                _hitPlayed = true;
+            }
             
             _isFail = true;
-            _audioSource.PlayOneShot(hitClip);
+            _animator.SetTrigger(Hit);
             Invoke(nameof(RestartGame), 1.2f);
         }
         

@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1016146266325057885}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -142,9 +142,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 402766503
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4096df8213204204fb7cb9e429ffe88c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acdeb7bc992c5444d858d88ebe891336, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -214,17 +214,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8215bb4c0616cf4cb15d8b194a57b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedX: 3
-  speedY: 2
+  horizontalSpeed: 3
+  verticalSpeed: 2
+  upperYLimit: 3.8
+  lowerYLimit: -3.4
   bossSprites:
   - {fileID: 21300000, guid: f7a1cb1d6add7c04c9dff1e17d9f0a01, type: 3}
   - {fileID: 21300000, guid: 9893c05637a9c604f83c7c8ceb6f0bcd, type: 3}
-  - {fileID: 21300000, guid: 1e17ce72d3184a04c966ca2e4c2e2284, type: 3}
   - {fileID: 21300000, guid: 15e4aa7845868164a8982699343a9ead, type: 3}
   - {fileID: 21300000, guid: 5fde91e770ffedd40aa754984122667c, type: 3}
-  - {fileID: 21300000, guid: 8c0f00a5507365040a86ab991a28aa0e, type: 3}
   - {fileID: 21300000, guid: c4c71efc8fa05634e8d0157a3eaa2738, type: 3}
   - {fileID: 21300000, guid: 6da85c71e7010fc40b023f8d002ee13e, type: 3}
-  - {fileID: 21300000, guid: 3e7ae53d52fb76d4c92bf0fc29312052, type: 3}
   - {fileID: 21300000, guid: e2b07514d5639434596cce23d63e0259, type: 3}
-  animationTime: 0.3
+  - {fileID: 21300000, guid: acdeb7bc992c5444d858d88ebe891336, type: 3}
+  spriteChangeInterval: 0.2

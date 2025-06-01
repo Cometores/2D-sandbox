@@ -39,7 +39,8 @@ namespace FlappyBird
         [Header("Sounds")]
         [SerializeField] private AudioClip jumpClip;
         [SerializeField] private AudioClip hitClip;
-        [SerializeField] private AudioClip pointClip;
+        [SerializeField] private AudioClip eatClip;
+        [SerializeField] private AudioClip[] pointClips;
         private AudioSource _audioSource;
         private bool _hitPlayed;
 
@@ -48,6 +49,7 @@ namespace FlappyBird
         
         private bool _isFail;
         private static readonly int Hit = Animator.StringToHash("hit");
+        private static readonly int Eat = Animator.StringToHash("eat");
 
         #endregion
         
@@ -101,10 +103,10 @@ namespace FlappyBird
             {
                 _audioSource.PlayOneShot(hitClip);
                 _hitPlayed = true;
+                _animator.SetTrigger(Hit);
             }
             
             _isFail = true;
-            _animator.SetTrigger(Hit);
             Invoke(nameof(RestartGame), 1.2f);
         }
         
@@ -113,7 +115,10 @@ namespace FlappyBird
         /// </summary>
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            _audioSource.PlayOneShot(pointClip);
+            if (pointClips == null || pointClips.Length == 0) return;
+
+            int index = Random.Range(0, pointClips.Length);
+            _audioSource.PlayOneShot(pointClips[index]);
 
             if (collision.CompareTag($"SpecialScore"))
             {
@@ -130,9 +135,14 @@ namespace FlappyBird
             if (collision.CompareTag($"PowerUp"))
             {
                 _isPowerUp = true;
-                _powerUpLeft = powerUpTime;
                 powerUp.SetActive(true);
+                _powerUpLeft = powerUpTime;
+                
+                _animator.SetTrigger(Eat);
+                _audioSource.PlayOneShot(eatClip);
+                
                 Destroy(collision.gameObject);
+
             }
         }
 

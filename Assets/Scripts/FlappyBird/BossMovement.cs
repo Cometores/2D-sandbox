@@ -8,98 +8,78 @@ namespace FlappyBird
     public class BossMovement : MonoBehaviour
     {
         #region Fields
-
-        private Rigidbody2D _rb;
-        private SpriteRenderer _spriteRenderer;
-
+        
         [Header("Movement")]
         [SerializeField] private float horizontalSpeed = 3f;
         [SerializeField] private float verticalSpeed = 2f;
         [SerializeField] private float upperYLimit = 3.8f;
         [SerializeField] private float lowerYLimit = -3.4f;
 
-        [Header("Rotation")]
-        private float _rotationSpeed;
-        private int _rotationDirection = 1;
-
         [Header("Animation")]
         [SerializeField] private Sprite[] bossSprites;
         [SerializeField] private float spriteChangeInterval = 0.2f;
+
+        private Rigidbody2D _rb;
+        private SpriteRenderer _renderer;
+        private float _rotationSpeed;
+        private int _rotationDirection = 1;
         private int _spriteIndex;
-        private int _spriteCount;
-        private float _animationTimer;
+        private float _timer;
 
         #endregion
-
+        
         #region Unity Methods
-
+        
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            _spriteCount = bossSprites.Length;
-
-            if (_spriteCount == 0)
-            {
-                Debug.LogWarning("BossMovement: No sprites assigned.");
-                enabled = false;
-            }
+            _renderer = GetComponent<SpriteRenderer>();
         }
 
         private void Start()
         {
             _rb.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
-            StartRotationCycle();
+            InvokeRepeating(nameof(UpdateRotation), 0f, Random.Range(0.9f, 1.5f));
         }
 
         private void FixedUpdate()
         {
             if (transform.position.y >= upperYLimit)
                 _rb.velocity = new Vector2(-horizontalSpeed, -verticalSpeed);
-
             else if (transform.position.y <= lowerYLimit)
                 _rb.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
         }
 
         private void Update()
         {
-            UpdateSpriteAnimation();
-            Rotate();
+            Animate();
+            transform.Rotate(0f, 0f, _rotationSpeed * _rotationDirection * Time.deltaTime);
         }
-
-        private void OnBecameInvisible()
-        {
-            Destroy(gameObject);
-        }
+        
+        private void OnBecameInvisible() => Destroy(gameObject);
 
         #endregion
 
         #region Animation & Rotation
-
-        private void UpdateSpriteAnimation()
+        
+        private void Animate()
         {
-            _animationTimer -= Time.deltaTime;
-
-            if (_animationTimer <= 0f)
+            if (bossSprites == null || bossSprites.Length == 0) return;
+            _timer -= Time.deltaTime;
+            if (_timer <= 0f)
             {
-                _spriteIndex = (_spriteIndex + 1) % _spriteCount;
-                _spriteRenderer.sprite = bossSprites[_spriteIndex];
-                _animationTimer = spriteChangeInterval + Random.Range(0f, 0.2f);
+                _spriteIndex = (_spriteIndex + 1) % bossSprites.Length;
+                _renderer.sprite = bossSprites[_spriteIndex];
+                _timer = spriteChangeInterval;
             }
         }
 
-        private void Rotate()
-        {
-            transform.Rotate(0f, 0f, _rotationSpeed * _rotationDirection * Time.deltaTime);
-        }
-
-        private void StartRotationCycle()
+        private void UpdateRotation()
         {
             _rotationSpeed = Random.Range(180f, 400f);
             _rotationDirection *= -1;
-            Invoke(nameof(StartRotationCycle), Random.Range(0.9f, 1.5f));
         }
-
-        #endregion
     }
+    
+    #endregion
 }

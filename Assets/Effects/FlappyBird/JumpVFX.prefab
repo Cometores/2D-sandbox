@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2520678621011892056}
   - component: {fileID: 2098149495496132798}
   m_Layer: 0
-  m_Name: JumpingParticles
+  m_Name: JumpVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

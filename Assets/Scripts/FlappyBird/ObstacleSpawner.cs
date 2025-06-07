@@ -1,54 +1,56 @@
 using UnityEngine;
 
-/* Spawner for stones, boss, and bonus pills */
 namespace FlappyBird
 {
     public class ObstacleSpawner : MonoBehaviour
     {
-        [SerializeField] private float spawnTimer;
         [SerializeField] private GameObject rockUp;
         [SerializeField] private GameObject rockDown;
+        [SerializeField] private GameObject rockDouble;
         [SerializeField] private GameObject boss;
         [SerializeField] private GameObject bonusPill;
         [SerializeField] private GameObject rocks;
 
-        [SerializeField] private GameObject rockUpSpawnPos;
-        [SerializeField] private GameObject rockDownSpawnPos;
-        [SerializeField] private GameObject bossSpawnPos;
-        [SerializeField] private GameObject bonusPillSpawnPos;
-        [SerializeField] private GameObject rocksSpawnPos;
+        [SerializeField] private Transform rockUpSpawn;
+        [SerializeField] private Transform rockDownSpawn;
+        [SerializeField] private Transform rockDoubleSpawn;
+        [SerializeField] private Transform bossSpawn;
+        [SerializeField] private Transform bonusPillSpawn;
+        [SerializeField] private Transform rocksSpawn;
 
-        [SerializeField] private float rocksTimer = 9f;
-        
-        private float _spawnCounter;
+        [SerializeField] private float spawnInterval = 2f;
+        [SerializeField] private float rocksInterval = 6f;
+
+        private int _spawnCounter;
 
         private void Start()
         {
-            InvokeRepeating(nameof(Spawner), 0f, 2f);
-            InvokeRepeating(nameof(SpawnRocks), 0f, rocksTimer);
-            
+            InvokeRepeating(nameof(SpawnObstacle), 0f, spawnInterval);
+            InvokeRepeating(nameof(SpawnRocks), 0f, rocksInterval);
         }
 
-        private void SpawnRocks()
-        {
-            Instantiate(rocks, rocksSpawnPos.transform.position, Quaternion.identity);
-        }
-        
-        private void Spawner()
+        private void SpawnObstacle()
         {
             _spawnCounter++;
 
             // Spawn either a rock or a boss
             if (_spawnCounter % 7 == 0)
-                Instantiate(boss, bossSpawnPos.transform.position, Quaternion.identity);
+                Instantiate(boss, bossSpawn.position, Quaternion.identity);
             else if (_spawnCounter % 2 == 0)
-                Instantiate(rockDown, rockDownSpawnPos.transform.position, Quaternion.identity);
-            else 
-                Instantiate(rockUp, rockUpSpawnPos.transform.position, Quaternion.identity);
+                Instantiate(rockDown, rockDownSpawn.position, Quaternion.identity);
+            else if (_spawnCounter % 5 == 0)
+                Instantiate(rockDouble, rockDoubleSpawn.position, Quaternion.identity);
+            else
+                Instantiate(rockUp, rockUpSpawn.position, Quaternion.identity);
 
-            // Sometimes we also spawn a bonus pill
+            // Spawn bonus bat
             if (_spawnCounter % 12 == 0 || _spawnCounter == 3)
-                Instantiate(bonusPill, bonusPillSpawnPos.transform.position, Quaternion.identity);
+                Instantiate(bonusPill, bonusPillSpawn.position, Quaternion.identity);
+        }
+
+        private void SpawnRocks()
+        {
+            Instantiate(rocks, rocksSpawn.position, Quaternion.identity);
         }
     }
 }

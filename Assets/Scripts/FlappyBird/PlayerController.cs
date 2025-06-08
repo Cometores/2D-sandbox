@@ -28,6 +28,10 @@ namespace FlappyBird
             _rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _ui = FindObjectOfType<UIController>();
+        }
+
+        private void Start()
+        {
             _input = InputHandler.Instance;
             _input.OnJump += Jump;
         }

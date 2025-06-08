@@ -1,56 +1,94 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FlappyBird
 {
     public class ObstacleSpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject rockUp;
-        [SerializeField] private GameObject rockDown;
-        [SerializeField] private GameObject rockDouble;
-        [SerializeField] private GameObject boss;
-        [SerializeField] private GameObject bonusPill;
-        [SerializeField] private GameObject rocks;
+        [Header("Obstacles")]
+        [SerializeField] private List<SpawnMapping> obstacleMappings;
+        
+        [Header("Fallback obstacle")]
+        [SerializeField] private GameObject fallbackRock;
+        [SerializeField] private Transform fallbackPoint;
 
-        [SerializeField] private Transform rockUpSpawn;
-        [SerializeField] private Transform rockDownSpawn;
-        [SerializeField] private Transform rockDoubleSpawn;
-        [SerializeField] private Transform bossSpawn;
-        [SerializeField] private Transform bonusPillSpawn;
+        [Header("Collectables")]
+        [SerializeField] private List<SpawnMapping> collectableMappings;
+
+        [Header("Bottom")]
+        [SerializeField] private GameObject rocks;
         [SerializeField] private Transform rocksSpawn;
 
-        [SerializeField] private float spawnInterval = 2f;
-        [SerializeField] private float rocksInterval = 6f;
+        [Header("Structure")]
+        [SerializeField] private Transform spawnContainer;
 
+        [Header("Timing")]
+        [SerializeField] private float spawnInterval = 2f;
+
+        private float _rocksInterval;
         private int _spawnCounter;
+
+        private void Awake()
+        {
+            ValidateMappings(obstacleMappings, "Obstacle");
+            ValidateMappings(collectableMappings, "Collectable");
+        }
 
         private void Start()
         {
+            _rocksInterval = spawnInterval * 2.8f;
+
             InvokeRepeating(nameof(SpawnObstacle), 0f, spawnInterval);
-            InvokeRepeating(nameof(SpawnRocks), 0f, rocksInterval);
+            InvokeRepeating(nameof(SpawnRocks), 0f, _rocksInterval);
         }
 
         private void SpawnObstacle()
         {
             _spawnCounter++;
+            SpawnCollectables();
 
-            // Spawn either a rock or a boss
-            if (_spawnCounter % 7 == 0)
-                Instantiate(boss, bossSpawn.position, Quaternion.identity);
-            else if (_spawnCounter % 2 == 0)
-                Instantiate(rockDown, rockDownSpawn.position, Quaternion.identity);
-            else if (_spawnCounter % 5 == 0)
-                Instantiate(rockDouble, rockDoubleSpawn.position, Quaternion.identity);
-            else
-                Instantiate(rockUp, rockUpSpawn.position, Quaternion.identity);
+            foreach (var mapping in obstacleMappings)
+            {
+                if (_spawnCounter % mapping.spawnEveryNth == 0)
+                {
+                    Instantiate(mapping.prefab, mapping.point.position, Quaternion.identity, spawnContainer);
+                    return;
+                }
+            }
 
-            // Spawn bonus bat
-            if (_spawnCounter % 12 == 0 || _spawnCounter == 3)
-                Instantiate(bonusPill, bonusPillSpawn.position, Quaternion.identity);
+            Instantiate(fallbackRock, fallbackPoint.position, Quaternion.identity, spawnContainer);
+        }
+
+        private void SpawnCollectables()
+        {
+            foreach (var collectable in collectableMappings)
+            {
+                if (_spawnCounter % collectable.spawnEveryNth == 0)
+                {
+                    Instantiate(collectable.prefab, collectable.point.position, Quaternion.identity, spawnContainer);
+                }
+            }
         }
 
         private void SpawnRocks()
         {
-            Instantiate(rocks, rocksSpawn.position, Quaternion.identity);
+            if (rocks != null && rocksSpawn != null)
+            {
+                Instantiate(rocks, rocksSpawn.position, Quaternion.identity);
+            }
+        }
+
+        private void ValidateMappings(List<SpawnMapping> list, string label)
+        {
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var m = list[i];
+                if (m.prefab == null || m.point == null || m.spawnEveryNth <= 0)
+                {
+                    Debug.LogWarning($"[ObstacleSpawner] Invalid {label} mapping at index {i} removed.");
+                    list.RemoveAt(i);
+                }
+            }
         }
     }
 }

@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3760466963772866267, guid: e1cad60d067235140b5382afa5bd332b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.59
+      value: 17.77
       objectReference: {fileID: 0}
     - target: {fileID: 3760466963772866267, guid: e1cad60d067235140b5382afa5bd332b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -316,7 +316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4283115057733168678, guid: 5f40baa1ae727b24a9e0a28e82a6e81d, type: 3}
       propertyPath: m_Name
-      value: RockDownSpawnPos
+      value: RockBottomSpawnPos
       objectReference: {fileID: 0}
     - target: {fileID: 4283115057733168678, guid: 5f40baa1ae727b24a9e0a28e82a6e81d, type: 3}
       propertyPath: m_IsActive
@@ -526,6 +526,7 @@ GameObject:
   - component: {fileID: 412479465}
   - component: {fileID: 412479468}
   - component: {fileID: 412479467}
+  - component: {fileID: 412479469}
   m_Layer: 5
   m_Name: Volume
   m_TagString: Untagged
@@ -542,16 +543,17 @@ RectTransform:
   m_GameObject: {fileID: 412479464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 1151104551}
   m_Father: {fileID: 1123275753}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -151.5}
-  m_SizeDelta: {x: 150, y: 32}
+  m_AnchoredPosition: {x: 0, y: -159}
+  m_SizeDelta: {x: 300, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &412479467
 MonoBehaviour:
@@ -591,6 +593,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412479464}
   m_CullTransparentMesh: 1
+--- !u!114 &412479469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412479464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8e422e149b1594da0bc98f5cee3b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.93333334, g: 0.2, b: 0.2, a: 1}
 --- !u!4 &461233677 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3760466963772866267, guid: e1cad60d067235140b5382afa5bd332b, type: 3}
@@ -831,20 +847,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00e058bf45647624fb982a4dd6a0b0b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockUp: {fileID: 8356328400374734527, guid: c542dd8548e43c244b6b4ad41acbf367, type: 3}
-  rockDown: {fileID: 4283115057733168678, guid: 5f40baa1ae727b24a9e0a28e82a6e81d, type: 3}
-  rockDouble: {fileID: 4701013201200252486, guid: b39a6f7267522874bb73ea82e8f26e28, type: 3}
-  boss: {fileID: 6638988463294320990, guid: 2f972c1b9b3fc52428efd733c9ed1a8e, type: 3}
-  bonusPill: {fileID: 3391493592806986646, guid: 546671b17baf26542b3a4671d1abff9b, type: 3}
+  obstacleMappings:
+  - prefab: {fileID: 4283115057733168678, guid: 5f40baa1ae727b24a9e0a28e82a6e81d, type: 3}
+    spawnEveryNth: 2
+    point: {fileID: 1753901358}
+  - prefab: {fileID: 4701013201200252486, guid: b39a6f7267522874bb73ea82e8f26e28, type: 3}
+    spawnEveryNth: 3
+    point: {fileID: 643873282}
+  - prefab: {fileID: 6638988463294320990, guid: 2f972c1b9b3fc52428efd733c9ed1a8e, type: 3}
+    spawnEveryNth: 5
+    point: {fileID: 1425514493}
+  fallbackRock: {fileID: 8356328400374734527, guid: c542dd8548e43c244b6b4ad41acbf367, type: 3}
+  fallbackPoint: {fileID: 2116545783}
+  collectableMappings:
+  - prefab: {fileID: 3391493592806986646, guid: 546671b17baf26542b3a4671d1abff9b, type: 3}
+    spawnEveryNth: 7
+    point: {fileID: 879308445}
   rocks: {fileID: 3760466963772866266, guid: e1cad60d067235140b5382afa5bd332b, type: 3}
-  rockUpSpawn: {fileID: 2116545783}
-  rockDownSpawn: {fileID: 1753901358}
-  rockDoubleSpawn: {fileID: 643873282}
-  bossSpawn: {fileID: 1425514493}
-  bonusPillSpawn: {fileID: 879308445}
   rocksSpawn: {fileID: 1519444073}
+  spawnContainer: {fileID: 2085116516}
   spawnInterval: 2
-  rocksInterval: 5.7
 --- !u!4 &570157465
 Transform:
   m_ObjectHideFlags: 0
@@ -893,7 +915,7 @@ Transform:
   - {fileID: 570157465}
   - {fileID: 1613203675}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &632927581
 GameObject:
@@ -1348,7 +1370,7 @@ GameObject:
   - component: {fileID: 1123275755}
   m_Layer: 5
   m_Name: PauseMenu
-  m_TagString: Untagged
+  m_TagString: PauseMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1415,6 +1437,103 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123275752}
   m_CullTransparentMesh: 1
+--- !u!1 &1151104550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1151104551}
+  - component: {fileID: 1151104553}
+  - component: {fileID: 1151104552}
+  - component: {fileID: 1151104554}
+  m_Layer: 5
+  m_Name: Mute
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1151104551
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151104550}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 412479465}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -106.1, y: 0}
+  m_SizeDelta: {x: 36, y: 24}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1151104552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151104550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 63c9074d2188b544b8bec71ae8db1440, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1151104553
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151104550}
+  m_CullTransparentMesh: 1
+--- !u!114 &1151104554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151104550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5a2fd868062b64c9305ba2ac12d29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  hoveredColor: {r: 0.93333334, g: 0.2, b: 0.2, a: 1}
+  normalSprite: {fileID: 21300000, guid: 63c9074d2188b544b8bec71ae8db1440, type: 3}
+  toggledSprite: {fileID: 21300000, guid: 0167f62c79170bf4daff688f694984aa, type: 3}
+  hoverScale: 1.3
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1214210734
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,7 +2005,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7534915788333825361, guid: d89698f043f0a6d48b93115cd81e2c73, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7534915788333825361, guid: d89698f043f0a6d48b93115cd81e2c73, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2427,7 +2546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8356328400374734527, guid: c542dd8548e43c244b6b4ad41acbf367, type: 3}
       propertyPath: m_Name
-      value: RockUpSpawnPos
+      value: RockTopSpawnPos
       objectReference: {fileID: 0}
     - target: {fileID: 8356328400374734527, guid: c542dd8548e43c244b6b4ad41acbf367, type: 3}
       propertyPath: m_IsActive
@@ -2825,7 +2944,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3391493592806986646, guid: 546671b17baf26542b3a4671d1abff9b, type: 3}
       propertyPath: m_Name
-      value: BonusPiiSpawnPos
+      value: BatSpawnPos
       objectReference: {fileID: 0}
     - target: {fileID: 3391493592806986646, guid: 546671b17baf26542b3a4671d1abff9b, type: 3}
       propertyPath: m_IsActive

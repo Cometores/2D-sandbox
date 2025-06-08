@@ -1,3 +1,4 @@
+using System;
 using FlappyBird.Input;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,21 +21,27 @@ namespace FlappyBird.Core
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+        }
 
-            var input = FindObjectOfType<InputHandler>();
-            if (input != null)
-                input.OnPause += TogglePause;
+        private void OnEnable()
+        {
+            if (InputHandler.Instance != null)
+                InputHandler.Instance.OnPause += TogglePause;
+        }
+
+        private void OnDisable()
+        {
+            if (InputHandler.Instance != null)
+                InputHandler.Instance.OnPause -= TogglePause;
         }
 
         public void TogglePause()
         {
             _isPaused = !_isPaused;
             Time.timeScale = _isPaused ? 0f : 1f;
-            if (pauseMenuUI != null)
-                pauseMenuUI.SetActive(_isPaused);
+            pauseMenuUI.SetActive(_isPaused);
         }
-
+        
         public void RestartLevel()
         {
             Time.timeScale = 1f;

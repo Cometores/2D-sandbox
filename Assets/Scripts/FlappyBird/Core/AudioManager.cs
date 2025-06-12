@@ -44,5 +44,10 @@ namespace FlappyBird.Core
             if (config.pointClips == null || config.pointClips.Length == 0) return;
             _aSource.PlayOneShot(config.pointClips[Random.Range(0, config.pointClips.Length)]);
         }
+        public void PlayUIHover()
+        {
+            if (!IsMuted)
+                _aSource.PlayOneShot(config.hoverClip);
+        }
     }
 }

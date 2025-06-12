@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FlappyBird.Config
 {
-    [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Configs/Player")]
+    [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Configs/FlappyBird/Player")]
     public class PlayerConfig : ScriptableObject
     {
         public float jumpForce = 5f;

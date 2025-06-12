@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CookieClicker
 {
-    [CreateAssetMenu(menuName = "Items/Multiplier")]
+    [CreateAssetMenu(menuName = "Configs/CookieClicker/Multiplier")]
     public class Multiplier : ScriptableObject
     {
         [TextArea(2, 15)]

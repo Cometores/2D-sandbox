@@ -19,3 +19,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ef494ee1565118d43baf29a191d68104, type: 3}
   - {fileID: 8300000, guid: 0cefb10a98c8d27489341d69433cfafa, type: 3}
   - {fileID: 8300000, guid: 14b68b653919869478ee15e6b3dc429f, type: 3}
+  hoverClip: {fileID: 8300000, guid: 3c35f7ce4e1752c4389011d258835671, type: 3}

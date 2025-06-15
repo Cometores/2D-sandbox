@@ -20,7 +20,7 @@ namespace SpaceShooter
             _startYPos = transform.position.y;
         }
 
-        private void Start() => _rb.velocity = Vector2.right * speed;
+        private void Start() => _rb.linearVelocity = Vector2.right * speed;
 
         private void FixedUpdate()
         {

@@ -51,7 +51,7 @@ namespace DungeonRPG
             SetAnimations();
         }
 
-        private void FixedUpdate() => _rb.velocity = _moveVector * speed;
+        private void FixedUpdate() => _rb.linearVelocity = _moveVector * speed;
 
         private void EnableInput()
         {

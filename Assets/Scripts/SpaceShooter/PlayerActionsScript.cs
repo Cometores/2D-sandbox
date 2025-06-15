@@ -83,9 +83,9 @@ namespace SpaceShooter
         private void FixedUpdate()
         {
             if (_isFail)
-                _rb.velocity = Vector2.zero; // we can't move when we lost
+                _rb.linearVelocity = Vector2.zero; // we can't move when we lost
             else
-                _rb.velocity = new Vector2(0, _moveDirection * moveSpeed); // move Up or Down
+                _rb.linearVelocity = new Vector2(0, _moveDirection * moveSpeed); // move Up or Down
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

@@ -16,6 +16,7 @@ namespace FlappyBird.UI
         private Vector3 _originalScale;
         private bool _isToggled;
 
+
         protected override void Awake()
         {
             base.Awake();
@@ -23,6 +24,11 @@ namespace FlappyBird.UI
             _originalScale = transform.localScale;
             _isToggled = AudioManager.Instance.IsMuted;
             Image.sprite = _isToggled ? toggledSprite : normalSprite;
+            AudioManager.Instance.OnVolumeChanged += (sender, args) =>
+            {
+                _isToggled = AudioManager.Instance.IsMuted;
+                Image.sprite = _isToggled ? toggledSprite : normalSprite;
+            };
         }
 
         public override void OnPointerEnter(PointerEventData eventData)
@@ -39,6 +45,7 @@ namespace FlappyBird.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
+
             _isToggled = !_isToggled;
             Image.sprite = _isToggled ? toggledSprite : normalSprite;
             AudioManager.Instance.ToggleMute();

@@ -12,7 +12,7 @@ namespace FlappyBird
         [SerializeField] private float speed = 3f;
 
         private void Awake() => _rb = GetComponent<Rigidbody2D>();
-        private void Start() => _rb.velocity = Vector2.left * speed;
+        private void Start() => _rb.linearVelocity = Vector2.left * speed;
         private void OnBecameInvisible() => Destroy(gameObject);
     }
 }

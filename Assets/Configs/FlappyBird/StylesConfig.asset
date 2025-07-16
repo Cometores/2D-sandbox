@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: StylesConfig
   m_EditorClassIdentifier: 
   normalColor: {r: 1, g: 1, b: 1, a: 1}
-  hoveredColor: {r: 0.93333334, g: 0.2, b: 0.2, a: 1}
+  hoveredColor: {r: 1, g: 1, b: 1, a: 1}

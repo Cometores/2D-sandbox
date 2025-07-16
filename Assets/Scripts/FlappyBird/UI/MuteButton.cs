@@ -23,6 +23,11 @@ namespace FlappyBird.UI
             _originalScale = transform.localScale;
             _isToggled = AudioManager.Instance.IsMuted;
             Image.sprite = _isToggled ? toggledSprite : normalSprite;
+            AudioManager.Instance.OnVolumeChanged += (sender, args) =>
+            {
+                _isToggled = AudioManager.Instance.IsMuted;
+                Image.sprite = _isToggled ? toggledSprite : normalSprite;
+            };
         }
 
         public override void OnPointerEnter(PointerEventData eventData)

@@ -1,12 +1,20 @@
 using FlappyBird.Config;
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace FlappyBird.Core
 {
     public class AudioManager : MonoBehaviour
     {
         public static AudioManager Instance;
-        public bool IsMuted { get; private set; }
+        public bool IsMuted => _Volume <= 0.05;
+        [SerializeField] private float _Volume;
+
+        public float Volume => _Volume;
+        [SerializeField] private float _VolumeBeforeMute = 0;
+
+        public EventHandler<VolumenChangedEventArgs> OnVolumeChanged { get; set; }
         
         [SerializeField] private AudioConfig config;
         private AudioSource _aSource;
@@ -23,19 +31,47 @@ namespace FlappyBird.Core
             DontDestroyOnLoad(gameObject);
             
             _aSource = GetComponent<AudioSource>();
-            IsMuted = PlayerPrefs.GetInt("Muted", 0) == 1;
-            ApplyMute();
+            
+            
+            _Volume = PlayerPrefs.GetFloat("Volume");
+            ApplyNewVolume();
         }
         
         public void ToggleMute()
         {
-            IsMuted = !IsMuted;
-            ApplyMute();
-            PlayerPrefs.SetInt("Muted", IsMuted ? 1 : 0);
+            if (IsMuted)
+            {
+                _Volume = _VolumeBeforeMute;
+                if (_Volume < 0.05f)
+                    _Volume = 0.5f;
+            }
+            else
+            {
+                _VolumeBeforeMute = AudioManager.Instance.Volume;
+                _Volume = 0;
+            }
+
+            PlayerPrefs.SetFloat("Volume", _Volume);
             PlayerPrefs.Save();
+            ApplyNewVolume();
+            OnVolumeChanged?.Invoke(this, new VolumenChangedEventArgs() { OldVolume = 0, NewVolume = _Volume });
         }
 
-        private void ApplyMute() => AudioListener.volume = IsMuted ? 0f : 1f;
+        public void SetVolume(float newVolume)
+        {
+            float old = _Volume;
+            _Volume = newVolume;
+
+            if (newVolume < 0.05)
+                _Volume = 0;
+
+            PlayerPrefs.SetFloat("Volume", _Volume);
+            PlayerPrefs.Save();
+            ApplyNewVolume();
+            OnVolumeChanged?.Invoke(this, new VolumenChangedEventArgs(){ OldVolume = old, NewVolume = _Volume} );
+        }
+
+        private void ApplyNewVolume() => _aSource.volume = _Volume;
         public void PlayJump() => _aSource.PlayOneShot(config.jumpClip);
         public void PlayHit() => _aSource.PlayOneShot(config.hitClip);
         public void PlayEat() => _aSource.PlayOneShot(config.eatClip);
@@ -49,5 +85,11 @@ namespace FlappyBird.Core
             if (!IsMuted)
                 _aSource.PlayOneShot(config.hoverClip);
         }
+    }
+
+    public sealed class VolumenChangedEventArgs
+    {
+        public float OldVolume { get; set; }
+        public float NewVolume { get; set; }
     }
 }

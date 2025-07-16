@@ -313,6 +313,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: tabletFire_10
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 0
+        width: 114
+        height: 139
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d83439772886cdd4b916b04fcd3928b7
+      internalID: 2126552440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tabletFire_11
+      rect:
+        serializedVersion: 2
+        x: 1254
+        y: 0
+        width: 114
+        height: 139
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abd494f955292964d88c15514befa59f
+      internalID: 1228819146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -327,6 +369,8 @@ TextureImporter:
       tabletFire_2: -584523301
       tabletFire_1: 1116553437
       tabletFire_0: -2012822360
+      tabletFire_10: 2126552440
+      tabletFire_11: 1228819146
       tabletFire_9: -430427211
       tabletFire_7: -1192983037
       tabletFire_5: -778218346

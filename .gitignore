@@ -67,7 +67,12 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# Hot Reload plugin
+Packages/com.singularitygroup.hotreload/
 
+# Scene switcher plugin
+Assets/SceneSwitcherPro
+Assets/SceneSwitcherPro.meta
 
 ## Rider ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider

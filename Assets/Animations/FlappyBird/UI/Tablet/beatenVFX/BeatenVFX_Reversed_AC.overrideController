@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BeatenVFX_Reversed_AC
+  m_Controller: {fileID: 9100000, guid: daddc9e3cc4f2b041a4f36a72d499bde, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: e14b4da023bec23499eb84dbe5ac69b2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ed35671489069664f9ac88905911e544, type: 2}

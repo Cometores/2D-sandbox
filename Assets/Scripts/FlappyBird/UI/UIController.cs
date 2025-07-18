@@ -9,9 +9,9 @@ namespace FlappyBird.UI
         [SerializeField] private TextMeshProUGUI powerUpText;
         [SerializeField] private GameObject powerUpDisplay;
 
-        public void UpdateScore(int score) => scoreText.text = score.ToString();
+        public void UpdateScoreTxt(int score) => scoreText.text = score.ToString();
 
-        public void ShowPowerUp(float time)
+        public void ShowPowerUpFor(float time)
         {
             powerUpDisplay.SetActive(true);
             powerUpText.text = $"Power Up: {time:0.0}";

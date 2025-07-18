@@ -10,8 +10,10 @@ namespace FlappyBird.Config
         public AudioClip hitClip;
         public AudioClip eatClip;
         
-        [Header( "UI")]
+        [Header("Soring")]
         public AudioClip[] pointClips;
+        
+        [Header( "UI")]
         public AudioClip hoverClip;
     }
 }

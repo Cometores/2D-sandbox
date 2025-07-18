@@ -16,18 +16,11 @@ namespace FlappyBird.UI
         private Vector3 _originalScale;
         private bool _isToggled;
 
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
-            
             _originalScale = transform.localScale;
             _isToggled = AudioManager.Instance.IsMuted;
             Image.sprite = _isToggled ? toggledSprite : normalSprite;
-            AudioManager.Instance.OnVolumeChanged += (sender, args) =>
-            {
-                _isToggled = AudioManager.Instance.IsMuted;
-                Image.sprite = _isToggled ? toggledSprite : normalSprite;
-            };
         }
 
         public override void OnPointerEnter(PointerEventData eventData)

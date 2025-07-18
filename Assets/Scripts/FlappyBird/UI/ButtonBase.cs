@@ -1,4 +1,3 @@
-using System;
 using FlappyBird.Config;
 using UnityEngine;
 using UnityEngine.EventSystems;

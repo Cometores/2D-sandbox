@@ -47,7 +47,7 @@ namespace FlappyBird
                     _ui.HidePowerUp();
                     _isPowered = false;
                 }
-                else _ui.ShowPowerUp(_powerUpTimeLeft);
+                else _ui.ShowPowerUpFor(_powerUpTimeLeft);
             }
             transform.Rotate(Vector3.back * (config.rotateSpeed * Time.deltaTime));
         }
@@ -84,13 +84,13 @@ namespace FlappyBird
         {
             if (col.CompareTag("Score")) {
                 _score += _isPowered ? config.scoreMultiplier : 1;
-                _ui.UpdateScore(_score);
-                AudioManager.Instance.PlayRandomPoint();
+                _ui.UpdateScoreTxt(_score);
+                AudioManager.Instance.PlayRandomScoringPoint();
             }
             else if (col.CompareTag("SpecialScore")) {
                 _score += _isPowered ? 2 * config.scoreMultiplier : 2;
-                _ui.UpdateScore(_score);
-                AudioManager.Instance.PlayRandomPoint();
+                _ui.UpdateScoreTxt(_score);
+                AudioManager.Instance.PlayRandomScoringPoint();
             }
             else if (col.CompareTag("PowerUp")) {
                 _isPowered = true;
@@ -99,6 +99,11 @@ namespace FlappyBird
                 _animator.SetTrigger(Eat);
                 Destroy(col.gameObject);
             }
+
+            GameManager.CurrentScore = _score;
+
+            if (_score > GameManager.BestScore)
+                PlayerPrefs.SetInt("bestScore", _score);
         }
 
         private void Restart() => GameManager.Instance.RestartLevel();

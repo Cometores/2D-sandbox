@@ -8,11 +8,13 @@ namespace FlappyBird.Core
     public class AudioManager : MonoBehaviour
     {
         public static AudioManager Instance;
+        [HideInInspector]
         public bool IsMuted => _Volume <= 0.05;
-        [SerializeField] private float _Volume;
-
+        [HideInInspector]
         public float Volume => _Volume;
+        [SerializeField] private float _Volume;
         [SerializeField] private float _VolumeBeforeMute = 0;
+
 
         public EventHandler<VolumenChangedEventArgs> OnVolumeChanged { get; set; }
         
@@ -72,19 +74,41 @@ namespace FlappyBird.Core
         }
 
         private void ApplyNewVolume() => _aSource.volume = _Volume;
-        public void PlayJump() => _aSource.PlayOneShot(config.jumpClip);
-        public void PlayHit() => _aSource.PlayOneShot(config.hitClip);
-        public void PlayEat() => _aSource.PlayOneShot(config.eatClip);
-        public void PlayRandomPoint()
+
+        #region Sound shots
+
+        public void PlayJump()
         {
-            if (config.pointClips == null || config.pointClips.Length == 0) return;
+            if (IsMuted) return;
+            _aSource.PlayOneShot(config.jumpClip);
+        }
+
+        public void PlayHit()
+        {
+            if (IsMuted) return;
+            _aSource.PlayOneShot(config.hitClip);
+        }
+
+        public void PlayEat()
+        {
+            if (IsMuted) return;
+            _aSource.PlayOneShot(config.eatClip);
+        }
+
+        public void PlayRandomScoringPoint()
+        {
+            if (IsMuted) return;
             _aSource.PlayOneShot(config.pointClips[Random.Range(0, config.pointClips.Length)]);
         }
+        
         public void PlayUIHover()
         {
-            if (!IsMuted)
-                _aSource.PlayOneShot(config.hoverClip);
+            if (IsMuted) return;
+            _aSource.PlayOneShot(config.hoverClip);
         }
+
+        #endregion
+        
     }
 
     public sealed class VolumenChangedEventArgs

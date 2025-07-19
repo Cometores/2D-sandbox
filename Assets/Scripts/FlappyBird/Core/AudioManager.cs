@@ -7,113 +7,117 @@ namespace FlappyBird.Core
 {
     public class AudioManager : MonoBehaviour
     {
-        public static AudioManager Instance;
-        [HideInInspector]
-        public bool IsMuted => _Volume <= 0.05;
-        [HideInInspector]
-        public float Volume => _Volume;
-        [SerializeField] private float _Volume;
-        [SerializeField] private float _VolumeBeforeMute = 0;
-
-
-        public EventHandler<VolumenChangedEventArgs> OnVolumeChanged { get; set; }
+        private const float MUTE_THRESHOLD = 0.05f;
+        private const float DEFAULT_VOLUME = 0.5f;
         
         [SerializeField] private AudioConfig config;
-        private AudioSource _aSource;
+        public static AudioManager Instance { get; private set; }
+        public bool IsMuted => _volume <= MUTE_THRESHOLD;
+        public float Volume => _volume;
+        public event EventHandler<VolumeChangedEventArgs> VolumeChanged;
+
+        private AudioSource _audioSource;
+        private float _volume;
+        private float _volumeBeforeMute;
 
         private void Awake()
         {
-            if (Instance != null)
+            if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
+
             Instance = this;
-            
             DontDestroyOnLoad(gameObject);
-            
-            _aSource = GetComponent<AudioSource>();
-            
-            
-            _Volume = PlayerPrefs.GetFloat("Volume");
-            ApplyNewVolume();
+
+            _audioSource = GetComponent<AudioSource>();
+            _volume = PlayerPrefs.GetFloat("Volume", DEFAULT_VOLUME);
+            ApplyVolume(_volume);
         }
-        
+
         public void ToggleMute()
         {
+            float oldVolume = _volume;
+
             if (IsMuted)
             {
-                _Volume = _VolumeBeforeMute;
-                if (_Volume < 0.05f)
-                    _Volume = 0.5f;
+                _volume = _volumeBeforeMute;
             }
             else
             {
-                _VolumeBeforeMute = AudioManager.Instance.Volume;
-                _Volume = 0;
+                _volumeBeforeMute = _volume;
+                _volume = 0f;
             }
 
-            PlayerPrefs.SetFloat("Volume", _Volume);
-            PlayerPrefs.Save();
-            ApplyNewVolume();
-            OnVolumeChanged?.Invoke(this, new VolumenChangedEventArgs() { OldVolume = 0, NewVolume = _Volume });
+            ApplyVolume(_volume);
+            RaiseVolumeChangedEvent(oldVolume, _volume);
         }
 
         public void SetVolume(float newVolume)
         {
-            float old = _Volume;
-            _Volume = newVolume;
+            float clamped = VolumeUtils.ClampVolume(newVolume, MUTE_THRESHOLD);
+            float oldVolume = _volume;
 
-            if (newVolume < 0.05)
-                _Volume = 0;
+            if (Mathf.Approximately(oldVolume, clamped)) return;
 
-            PlayerPrefs.SetFloat("Volume", _Volume);
+            _volume = clamped;
+            ApplyVolume(_volume);
+            RaiseVolumeChangedEvent(oldVolume, _volume);
+        }
+
+        private void ApplyVolume(float volume)
+        {
+            _audioSource.volume = volume;
+            PlayerPrefs.SetFloat("Volume", volume);
             PlayerPrefs.Save();
-            ApplyNewVolume();
-            OnVolumeChanged?.Invoke(this, new VolumenChangedEventArgs(){ OldVolume = old, NewVolume = _Volume} );
         }
 
-        private void ApplyNewVolume() => _aSource.volume = _Volume;
-
-        #region Sound shots
-
-        public void PlayJump()
+        private void RaiseVolumeChangedEvent(float oldVolume, float newVolume)
         {
-            if (IsMuted) return;
-            _aSource.PlayOneShot(config.jumpClip);
+            VolumeChanged?.Invoke(this, new VolumeChangedEventArgs(oldVolume, newVolume));
         }
 
-        public void PlayHit()
-        {
-            if (IsMuted) return;
-            _aSource.PlayOneShot(config.hitClip);
-        }
+        #region Sound Shots
 
-        public void PlayEat()
-        {
-            if (IsMuted) return;
-            _aSource.PlayOneShot(config.eatClip);
-        }
-
+        public void PlayJump() => PlaySound(config.jumpClip);
+        public void PlayHit() => PlaySound(config.hitClip);
+        public void PlayEat() => PlaySound(config.eatClip);
         public void PlayRandomScoringPoint()
         {
-            if (IsMuted) return;
-            _aSource.PlayOneShot(config.pointClips[Random.Range(0, config.pointClips.Length)]);
+            if (config.pointClips.Length > 0)
+            {
+                PlaySound(config.pointClips[Random.Range(0, config.pointClips.Length)]);
+            }
         }
-        
-        public void PlayUIHover()
+        public void PlayUIHover() => PlaySound(config.hoverClip);
+
+        private void PlaySound(AudioClip clip)
         {
-            if (IsMuted) return;
-            _aSource.PlayOneShot(config.hoverClip);
+            if (!IsMuted && clip != null)
+            {
+                _audioSource.PlayOneShot(clip);
+            }
         }
 
         #endregion
-        
     }
 
-    public sealed class VolumenChangedEventArgs
+    public static class VolumeUtils
     {
-        public float OldVolume { get; set; }
-        public float NewVolume { get; set; }
+        public static float ClampVolume(float volume, float muteThreshold) =>
+            volume < muteThreshold ? 0f : Mathf.Clamp01(volume);
+    }
+
+    public sealed class VolumeChangedEventArgs : EventArgs
+    {
+        public float OldVolume { get; }
+        public float NewVolume { get; }
+
+        public VolumeChangedEventArgs(float oldVolume, float newVolume)
+        {
+            OldVolume = oldVolume;
+            NewVolume = newVolume;
+        }
     }
 }

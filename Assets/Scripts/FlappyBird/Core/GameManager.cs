@@ -5,13 +5,17 @@ using UnityEngine.SceneManagement;
 namespace FlappyBird.Core
 {
     /// <summary>
-    /// The GameManager class handles the core game management functionalities such as pausing the game,
-    /// restarting the level, and exiting the game.
+    /// Manages core game functionality, including:
+    /// <list type="bullet">
+    ///   <item><description>Pausing and resuming the game</description></item>
+    ///   <item><description>Restarting the current level</description></item>
+    ///   <item><description>Exiting the game</description></item>
+    ///   <item><description>Tracking and updating the score</description></item>
+    /// </list>
     /// </summary>
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
-        
         public static int CurrentScore { get; set; }
         public static int BestScore { get; private set; }
         public static bool IsBeaten => CurrentScore > BestScore;
@@ -26,7 +30,7 @@ namespace FlappyBird.Core
                 Destroy(gameObject);
                 return;
             }
-            
+
             Instance = this;
             BestScore = PlayerPrefs.GetInt("bestScore", 0);
         }
@@ -53,7 +57,9 @@ namespace FlappyBird.Core
         }
 
         #endregion
-
+        
+        # region Level logic
+        
         public void RestartLevel()
         {
             Time.timeScale = 1f;
@@ -63,10 +69,12 @@ namespace FlappyBird.Core
         public void ExitGame()
         {
             Application.Quit();
-            
+
             #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
             #endif
         }
+        
+        # endregion
     }
 }

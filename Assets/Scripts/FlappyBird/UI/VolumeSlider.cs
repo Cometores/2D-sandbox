@@ -1,40 +1,44 @@
-﻿using FlappyBird.Core;
-using System;
+﻿using System;
+using FlappyBird.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class VolumeSlider : MonoBehaviour, IPointerDownHandler
+namespace FlappyBird.UI
 {
-    private Image _FillImage;
-
-    [SerializeField] private RectTransform _ScalingRect;
-
-    private float _ParentScale;
-
-    void Awake()
+    public class VolumeSlider : MonoBehaviour, IPointerDownHandler
     {
-        AudioManager.Instance.OnVolumeChanged += (sender, args) =>
+        private Image _fillImage;
+
+        void Awake()
         {
-            _FillImage.fillAmount = args.NewVolume;
-        };
-    }
+            _fillImage = GetComponent<Image>();
 
-    void Start()
-    {
-        _FillImage = GetComponent<Image>();
-        _ParentScale = _ScalingRect.localScale.x;
-        _FillImage.fillAmount = AudioManager.Instance.Volume;
-    }
+            AudioManager.Instance.VolumeChanged += (sender, args) =>
+            {
+                _fillImage.fillAmount = args.NewVolume;
+            };
+        }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        _ParentScale = _ScalingRect.localScale.x;
-        var imageWidth = _FillImage.rectTransform.rect.width * _FillImage.canvas.scaleFactor * _ParentScale;
-        var fixedClick = eventData.position.x - _FillImage.transform.position.x;
-        var percentage = fixedClick / imageWidth;
-        var final = MathF.Round(percentage * 20) / 20;
-        _FillImage.fillAmount = final;
-        AudioManager.Instance.SetVolume(final);
+        void Start()
+        {
+            _fillImage.fillAmount = AudioManager.Instance.Volume;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            var imageWidth = _fillImage.rectTransform.rect.width * 2;
+            var fixedClick = eventData.position.x - _fillImage.transform.position.x;
+            var percentage = fixedClick / imageWidth;
+            var final = MathF.Round(percentage * 20) / 20;
+            
+            _fillImage.fillAmount = final;
+            if (final == 0)
+            {
+                AudioManager.Instance.ToggleMute();
+            }
+            
+            AudioManager.Instance.SetVolume(final);
+        }
     }
 }

@@ -32,8 +32,13 @@ namespace FlappyBird.Core
             DontDestroyOnLoad(gameObject);
 
             _audioSource = GetComponent<AudioSource>();
+        }
+
+        private void Start()
+        {
             _volume = PlayerPrefs.GetFloat("Volume", DEFAULT_VOLUME);
             ApplyVolume(_volume);
+            RaiseVolumeChangedEvent(_volume, 99999);
         }
 
         public void ToggleMute()

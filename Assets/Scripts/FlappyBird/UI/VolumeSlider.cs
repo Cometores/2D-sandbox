@@ -8,21 +8,28 @@ namespace FlappyBird.UI
 {
     public class VolumeSlider : MonoBehaviour, IPointerDownHandler
     {
+        [SerializeField] private Image previousImage;
         private Image _fillImage;
 
         void Awake()
         {
             _fillImage = GetComponent<Image>();
-
-            AudioManager.Instance.VolumeChanged += (sender, args) =>
-            {
-                _fillImage.fillAmount = args.NewVolume;
-            };
         }
 
         void Start()
         {
             _fillImage.fillAmount = AudioManager.Instance.Volume;
+            AudioManager.Instance.VolumeChanged += OnVolumeChanged;
+        }
+        
+        private void OnEnable()
+        {
+            AudioManager.Instance.VolumeChanged += OnVolumeChanged;
+        }
+
+        private void OnDisable()
+        {
+            AudioManager.Instance.VolumeChanged -= OnVolumeChanged;
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -39,6 +46,25 @@ namespace FlappyBird.UI
             }
             
             AudioManager.Instance.SetVolume(final);
+        }
+        
+        private void OnVolumeChanged(object sender, VolumeChangedEventArgs e)
+        {
+            if (Mathf.Approximately(e.NewVolume, e.OldVolume))
+            {
+                return;
+            }
+            if (e.NewVolume == 0)
+            {
+                previousImage.gameObject.SetActive(true);
+                previousImage.fillAmount = e.OldVolume;
+            }
+            if (previousImage && e.NewVolume >= 0.05f)
+            {
+                previousImage.gameObject.SetActive(false);
+            }
+                
+            _fillImage.fillAmount = e.NewVolume;
         }
     }
 }

@@ -13,7 +13,6 @@ namespace FlappyBird
         [SerializeField] private float chaos = 1f;
 
         [Header("Rotation")] 
-        [SerializeField] private float tiltStrength = 30f;
         [SerializeField] private float tiltSmooth = 5f;
 
         private float _timeOffset;

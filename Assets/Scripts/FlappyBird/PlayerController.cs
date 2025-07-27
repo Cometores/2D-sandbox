@@ -27,7 +27,7 @@ namespace FlappyBird
         {
             _rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-            _ui = FindObjectOfType<UIController>();
+            _ui = FindFirstObjectByType<UIController>();
         }
 
         private void Start()

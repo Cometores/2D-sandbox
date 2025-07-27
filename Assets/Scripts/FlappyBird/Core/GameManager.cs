@@ -1,4 +1,5 @@
 using FlappyBird.Input;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,12 +16,15 @@ namespace FlappyBird.Core
     /// </summary>
     public class GameManager : MonoBehaviour
     {
+        [SerializeField] private GameObject pauseMenuUI;
+        [SerializeField] private GameObject pauseText;
+        
         public static GameManager Instance { get; private set; }
         public static int CurrentScore { get; set; }
         public static int BestScore { get; private set; }
         public static bool IsBeaten => CurrentScore > BestScore;
-
-        [SerializeField] private GameObject pauseMenuUI;
+        public static bool IsPlaying => Application.isPlaying;
+        
         private bool _isPaused;
 
         private void Awake()
@@ -33,6 +37,13 @@ namespace FlappyBird.Core
 
             Instance = this;
             BestScore = PlayerPrefs.GetInt("bestScore", 0);
+        }
+
+        private void Start()
+        {
+            _isPaused = false;
+            pauseMenuUI.SetActive(false);
+            pauseText.SetActive(false);
         }
 
         #region Pause input logic
@@ -54,6 +65,7 @@ namespace FlappyBird.Core
             _isPaused = !_isPaused;
             Time.timeScale = _isPaused ? 0f : 1f;
             pauseMenuUI.SetActive(_isPaused);
+            pauseText.SetActive(_isPaused);
         }
 
         #endregion
@@ -76,5 +88,19 @@ namespace FlappyBird.Core
         }
         
         # endregion
+        
+        #region Debug Tools
+        
+#if UNITY_EDITOR
+        
+        [Button, EnableIf(nameof(IsPlaying))]
+        private void SetCurrentScore999()
+        {
+            CurrentScore = 999;
+        }
+        
+#endif
+        
+        #endregion
     }
 }

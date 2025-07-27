@@ -38,16 +38,16 @@ namespace FlappyBird
 
         private void Start()
         {
-            _rb.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
+            _rb.linearVelocity = new Vector2(-horizontalSpeed, verticalSpeed);
             InvokeRepeating(nameof(UpdateRotation), 0f, Random.Range(0.9f, 1.5f));
         }
 
         private void FixedUpdate()
         {
             if (transform.position.y >= upperYLimit)
-                _rb.velocity = new Vector2(-horizontalSpeed, -verticalSpeed);
+                _rb.linearVelocity = new Vector2(-horizontalSpeed, -verticalSpeed);
             else if (transform.position.y <= lowerYLimit)
-                _rb.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
+                _rb.linearVelocity = new Vector2(-horizontalSpeed, verticalSpeed);
         }
 
         private void Update()

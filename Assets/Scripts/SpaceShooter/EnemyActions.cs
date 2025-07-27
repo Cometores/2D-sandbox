@@ -37,7 +37,7 @@ namespace SpaceShooter
         private void Start()
         {
             EnemyFire(); // looped function for firing 
-            _rb.velocity = Vector2.up * movementSpeed;
+            _rb.linearVelocity = Vector2.up * movementSpeed;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -46,7 +46,7 @@ namespace SpaceShooter
             if (collision.gameObject.name == "UpperBound" || collision.gameObject.name == "LowerBound")
             {
                 _movementDirection *= -1;
-                _rb.velocity = _movementDirection * movementSpeed * Vector2.up;
+                _rb.linearVelocity = _movementDirection * movementSpeed * Vector2.up;
             }
         }
 

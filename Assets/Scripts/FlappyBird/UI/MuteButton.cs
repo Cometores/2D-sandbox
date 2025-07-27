@@ -21,13 +21,21 @@ namespace FlappyBird.UI
             _originalScale = transform.localScale;
             _isToggled = AudioManager.Instance.IsMuted;
             Image.sprite = _isToggled ? toggledSprite : normalSprite;
-            AudioManager.Instance.VolumeChanged += OnVolumeChanged;
         }
         
+        private void OnEnable()
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.VolumeChanged += OnVolumeChanged;
+        }
+
         protected override void OnDisable()
         {
             base.OnDisable();
             transform.localScale = _originalScale;
+
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.VolumeChanged -= OnVolumeChanged;
         }
 
         #region Mouse pointer behaviour
@@ -53,14 +61,16 @@ namespace FlappyBird.UI
         
         private void OnVolumeChanged(object sender, VolumeChangedEventArgs e)
         {
-            if (e.NewVolume == 0f || (e.NewVolume >= 0.05f && e.OldVolume == 0f))
-                FlipSprite();
-        }
-
-        private void FlipSprite()
-        {
-            _isToggled = !_isToggled;
-            Image.sprite = _isToggled ? toggledSprite : normalSprite;
+            if (e.NewVolume == 0f)
+            {
+                _isToggled = true;
+                Image.sprite = toggledSprite; 
+            }
+            else if (e.NewVolume >= 0.05f && e.OldVolume == 0f)
+            {
+                _isToggled = false;
+                Image.sprite =  normalSprite; 
+            }
         }
     }
 }

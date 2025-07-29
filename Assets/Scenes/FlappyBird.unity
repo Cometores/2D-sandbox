@@ -2550,7 +2550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   style: {fileID: 11400000, guid: e76687411cd062a4d8025d0a8d3af69e, type: 2}
   normalSprite: {fileID: 21300000, guid: 63c9074d2188b544b8bec71ae8db1440, type: 3}
-  toggledSprite: {fileID: 21300000, guid: 0167f62c79170bf4daff688f694984aa, type: 3}
+  mutedSprite: {fileID: 21300000, guid: 0167f62c79170bf4daff688f694984aa, type: 3}
   hoverScale: 1.3
 --- !u!1 &1214210734
 GameObject:

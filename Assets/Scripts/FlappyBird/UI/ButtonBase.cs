@@ -12,9 +12,13 @@ namespace FlappyBird.UI
         protected Image Image;
 
         protected virtual void Awake() => Image = GetComponent<Image>();
+
+        #region Color
+        
         public virtual void OnPointerEnter(PointerEventData eventData) => Image.color = style.hoveredColor;
         public virtual void OnPointerExit(PointerEventData eventData) => Image.color = style.normalColor;
-
         protected virtual void OnDisable() => Image.color = style.normalColor;
+        
+        #endregion
     }
 }

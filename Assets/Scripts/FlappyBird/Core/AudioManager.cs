@@ -7,12 +7,9 @@ namespace FlappyBird.Core
 {
     public class AudioManager : MonoBehaviour
     {
-        private const float MUTE_THRESHOLD = 0.05f;
-        private const float DEFAULT_VOLUME = 0.5f;
-        
         [SerializeField] private AudioConfig config;
         public static AudioManager Instance { get; private set; }
-        public bool IsMuted => _volume <= MUTE_THRESHOLD;
+        public bool IsMuted => _volume <= Constants.MUTE_THRESHOLD;
         public float Volume => _volume;
         public event EventHandler<VolumeChangedEventArgs> VolumeChanged;
 
@@ -36,9 +33,12 @@ namespace FlappyBird.Core
 
         private void Start()
         {
-            _volume = PlayerPrefs.GetFloat("Volume", DEFAULT_VOLUME);
-            ApplyVolume(_volume);
-            RaiseVolumeChangedEvent(_volume, 99999);
+            _volume = PlayerPrefs.GetFloat("Volume", Constants.DEFAULT_VOLUME);
+            if (_volume == 0)
+                _volume = Constants.DEFAULT_VOLUME;
+            
+            ApplyAndSaveVolume(_volume);
+            RaiseVolumeChangedEvent(_volume, _volume);
         }
 
         public void ToggleMute()
@@ -55,23 +55,23 @@ namespace FlappyBird.Core
                 _volume = 0f;
             }
 
-            ApplyVolume(_volume);
+            ApplyAndSaveVolume(_volume);
             RaiseVolumeChangedEvent(oldVolume, _volume);
         }
 
         public void SetVolume(float newVolume)
         {
-            float clamped = VolumeUtils.ClampVolume(newVolume, MUTE_THRESHOLD);
+            float clamped = VolumeUtils.ClampVolume(newVolume, Constants.MUTE_THRESHOLD);
             float oldVolume = _volume;
 
             if (Mathf.Approximately(oldVolume, clamped)) return;
 
             _volume = clamped;
-            ApplyVolume(_volume);
+            ApplyAndSaveVolume(_volume);
             RaiseVolumeChangedEvent(oldVolume, _volume);
         }
 
-        private void ApplyVolume(float volume)
+        private void ApplyAndSaveVolume(float volume)
         {
             _audioSource.volume = volume;
             PlayerPrefs.SetFloat("Volume", volume);
@@ -112,17 +112,5 @@ namespace FlappyBird.Core
     {
         public static float ClampVolume(float volume, float muteThreshold) =>
             volume < muteThreshold ? 0f : Mathf.Clamp01(volume);
-    }
-
-    public sealed class VolumeChangedEventArgs : EventArgs
-    {
-        public float OldVolume { get; }
-        public float NewVolume { get; }
-
-        public VolumeChangedEventArgs(float oldVolume, float newVolume)
-        {
-            OldVolume = oldVolume;
-            NewVolume = newVolume;
-        }
     }
 }

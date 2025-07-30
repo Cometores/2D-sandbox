@@ -6,14 +6,14 @@ namespace FlappyBird
     public class ObstacleSpawner : MonoBehaviour
     {
         [Header("Obstacles")]
-        [SerializeField] private List<SpawnMapping> obstacleMappings;
+        [SerializeField] private List<SpawnItem> obstacleMappings;
         
         [Header("Fallback obstacle")]
         [SerializeField] private GameObject fallbackRock;
         [SerializeField] private Transform fallbackPoint;
 
         [Header("Collectables")]
-        [SerializeField] private List<SpawnMapping> collectableMappings;
+        [SerializeField] private List<SpawnItem> collectableMappings;
 
         [Header("Bottom")]
         [SerializeField] private GameObject rocks;
@@ -78,7 +78,7 @@ namespace FlappyBird
             }
         }
 
-        private void ValidateMappings(List<SpawnMapping> list, string label)
+        private void ValidateMappings(List<SpawnItem> list, string label)
         {
             for (int i = list.Count - 1; i >= 0; i--)
             {

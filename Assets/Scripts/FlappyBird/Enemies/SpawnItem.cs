@@ -4,10 +4,10 @@ using UnityEngine;
 namespace FlappyBird
 {
     [Serializable]
-    public struct SpawnMapping
+    public struct SpawnItem
     {
         public GameObject prefab;
-        public int spawnEveryNth;
+        [Min(2)]public int spawnEveryNth;
         public Transform point;
     }
 }

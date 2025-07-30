@@ -5,7 +5,7 @@ namespace FlappyBird
     public class SinMovement : MonoBehaviour
     {
         [Header("Movement Settings")] 
-        [SerializeField] private float speed = 3.5f;
+        [SerializeField] private float speed = 3;
 
         [Header("Vertical Motion")] 
         [SerializeField] private float amplitude = 2f;

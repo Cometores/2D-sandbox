@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FlappyBird
 {
@@ -8,11 +9,21 @@ namespace FlappyBird
     /// </summary>
     public class ObstacleMover : MonoBehaviour
     {
-        private Rigidbody2D _rb;
-        [SerializeField] private float speed = 3f;
+        protected Rigidbody2D _rb;
 
-        private void Awake() => _rb = GetComponent<Rigidbody2D>();
-        private void Start() => _rb.linearVelocity = Vector2.left * speed;
-        private void OnBecameInvisible() => Destroy(gameObject);
+        [FormerlySerializedAs("speed")][SerializeField] protected float horizontalSpeed = 3f;
+
+        protected virtual void Awake() => _rb = GetComponent<Rigidbody2D>();
+
+        protected virtual void Start() => ApplyHorizontalVelocity();
+
+        protected virtual void ApplyHorizontalVelocity()
+        {
+            Vector2 v = _rb.linearVelocity;
+            v.x = -horizontalSpeed;
+            _rb.linearVelocity = v;
+        }
+
+        protected virtual void OnBecameInvisible() => Destroy(gameObject);
     }
 }

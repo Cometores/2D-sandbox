@@ -5,12 +5,11 @@ namespace FlappyBird
     /// <summary>
     /// Controls the movement and animation of the boss character.
     /// </summary>
-    public class BossMovement : MonoBehaviour
+    public class BossMovement : ObstacleMover
     {
         #region Fields
-        
+
         [Header("Movement")]
-        [SerializeField] private float horizontalSpeed = 3f;
         [SerializeField] private float verticalSpeed = 2f;
         [SerializeField] private float upperYLimit = 3.8f;
         [SerializeField] private float lowerYLimit = -3.4f;
@@ -19,7 +18,6 @@ namespace FlappyBird
         [SerializeField] private Sprite[] bossSprites;
         [SerializeField] private float spriteChangeInterval = 0.2f;
 
-        private Rigidbody2D _rb;
         private SpriteRenderer _renderer;
         private float _rotationSpeed;
         private int _rotationDirection = 1;
@@ -27,18 +25,20 @@ namespace FlappyBird
         private float _timer;
 
         #endregion
-        
+
         #region Unity Methods
-        
-        private void Awake()
+
+        protected override void Awake()
         {
-            _rb = GetComponent<Rigidbody2D>();
+            base.Awake();
             _renderer = GetComponent<SpriteRenderer>();
         }
 
-        private void Start()
+        protected override void Start()
         {
-            _rb.linearVelocity = new Vector2(-horizontalSpeed, verticalSpeed);
+            base.Start();
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, verticalSpeed);
+
             InvokeRepeating(nameof(UpdateRotation), 0f, Random.Range(0.9f, 1.5f));
         }
 
@@ -47,7 +47,7 @@ namespace FlappyBird
             if (transform.position.y >= upperYLimit)
                 _rb.linearVelocity = new Vector2(-horizontalSpeed, -verticalSpeed);
             else if (transform.position.y <= lowerYLimit)
-                _rb.linearVelocity = new Vector2(-horizontalSpeed, verticalSpeed);
+                _rb.linearVelocity = new Vector2(-horizontalSpeed,  verticalSpeed);
         }
 
         private void Update()
@@ -55,13 +55,11 @@ namespace FlappyBird
             Animate();
             transform.Rotate(0f, 0f, _rotationSpeed * _rotationDirection * Time.deltaTime);
         }
-        
-        private void OnBecameInvisible() => Destroy(gameObject);
 
         #endregion
 
         #region Animation & Rotation
-        
+
         private void Animate()
         {
             if (bossSprites == null || bossSprites.Length == 0) return;
@@ -79,7 +77,7 @@ namespace FlappyBird
             _rotationSpeed = Random.Range(180f, 400f);
             _rotationDirection *= -1;
         }
+
+        #endregion
     }
-    
-    #endregion
 }

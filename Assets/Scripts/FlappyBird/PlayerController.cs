@@ -99,12 +99,20 @@ namespace FlappyBird
                 _animator.SetTrigger(Eat);
                 Destroy(col.gameObject);
             }
+            else if (col.CompareTag("Skull"))
+            {
+                InvertParallaxSpeed();
+                Destroy(col.gameObject);
+                Invoke(nameof(InvertParallaxSpeed), 3f);
+            }
 
             GameManager.CurrentScore = _score;
 
             if (_score > GameManager.BestScore)
                 PlayerPrefs.SetInt("bestScore", _score);
         }
+
+        private void InvertParallaxSpeed() => Parallax.InvertSpeed();
 
         private void Restart() => GameManager.Instance.RestartLevel();
     }

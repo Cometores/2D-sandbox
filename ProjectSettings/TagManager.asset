@@ -11,6 +11,7 @@ TagManager:
   - Score
   - SpecialScore
   - PauseMenu
+  - Skull
   layers:
   - Default
   - TransparentFX

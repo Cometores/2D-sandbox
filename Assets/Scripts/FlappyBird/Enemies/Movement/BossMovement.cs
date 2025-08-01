@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FlappyBird
+namespace FlappyBird.Enemies.Movement
 {
     /// <summary>
     /// Controls the movement and animation of the boss character.

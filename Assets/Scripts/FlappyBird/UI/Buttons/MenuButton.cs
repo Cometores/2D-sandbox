@@ -2,7 +2,7 @@ using FlappyBird.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace FlappyBird.UI
+namespace FlappyBird.UI.Buttons
 {
     public class MenuButton : ButtonBase
     {

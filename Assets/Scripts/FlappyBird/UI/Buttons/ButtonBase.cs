@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace FlappyBird.UI
+namespace FlappyBird.UI.Buttons
 {
     [RequireComponent(typeof(Image))]
     public class ButtonBase : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler

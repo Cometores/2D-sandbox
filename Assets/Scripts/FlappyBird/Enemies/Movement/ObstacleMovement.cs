@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace FlappyBird
+namespace FlappyBird.Enemies.Movement
 {
     /// <summary>
     /// Manages the movement of obstacles in the game.

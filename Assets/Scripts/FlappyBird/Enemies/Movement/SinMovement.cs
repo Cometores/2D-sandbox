@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-namespace FlappyBird
+namespace FlappyBird.Enemies.Movement
 {
     public class SinMovement : MonoBehaviour
     {
@@ -60,6 +62,15 @@ namespace FlappyBird
 
             Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, tiltSmooth * Time.deltaTime);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+
+            if (other.GetComponent<PlayerController>() != null)
+            {
+                Debug.Log("player");
+            }
         }
     }
 }

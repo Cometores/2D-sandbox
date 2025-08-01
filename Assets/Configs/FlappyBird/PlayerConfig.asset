@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   jumpForce: 5
-  rotateSpeed: 15
+  rotateSpeed: 17
   powerUpDuration: 10
   scoreMultiplier: 2

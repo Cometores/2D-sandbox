@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FlappyBird
+namespace FlappyBird.Enemies
 {
     public class ObstacleSpawner : MonoBehaviour
     {

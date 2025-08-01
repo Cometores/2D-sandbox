@@ -1,3 +1,4 @@
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace FlappyBird.UI
         public void ShowPowerUpFor(float time)
         {
             powerUpDisplay.SetActive(true);
-            powerUpText.text = $"Power Up: {time:0.0}";
+            powerUpText.text = $"Power Up {time.ToString("0.0", CultureInfo.InvariantCulture)}";
         }
 
         public void HidePowerUp() => powerUpDisplay.SetActive(false);

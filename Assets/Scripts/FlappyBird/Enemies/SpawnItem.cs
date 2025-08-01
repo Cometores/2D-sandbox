@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace FlappyBird
+namespace FlappyBird.Enemies
 {
     [Serializable]
     public struct SpawnItem

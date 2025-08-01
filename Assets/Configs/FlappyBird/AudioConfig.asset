@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5ab6d802066af4b929a333fb74e5f7, type: 3}
   m_Name: AudioConfig
   m_EditorClassIdentifier: 
-  jumpClip: {fileID: 8300000, guid: ac131612c36e8e748bd22ce3d6cef641, type: 3}
+  jumpClips:
+  - {fileID: 8300000, guid: e97597df6a0293b4196fa627cda680ea, type: 3}
+  - {fileID: 8300000, guid: f208f21cdf50cec40a26b00a9a477443, type: 3}
   hitClip: {fileID: 8300000, guid: 392072988ecdfa04f851714e71978cde, type: 3}
   eatClip: {fileID: 8300000, guid: 5faa99d4ce14c634eb0daee8e172eba8, type: 3}
   pointClips:
   - {fileID: 8300000, guid: ef494ee1565118d43baf29a191d68104, type: 3}
   - {fileID: 8300000, guid: 0cefb10a98c8d27489341d69433cfafa, type: 3}
   - {fileID: 8300000, guid: 14b68b653919869478ee15e6b3dc429f, type: 3}
-  hoverClip: {fileID: 8300000, guid: 3c35f7ce4e1752c4389011d258835671, type: 3}
+  hoverClips:
+  - {fileID: 8300000, guid: 3c35f7ce4e1752c4389011d258835671, type: 3}
+  - {fileID: 8300000, guid: 651ffe14086033a4aa9f896b44b86c2d, type: 3}
+  - {fileID: 8300000, guid: d804fee36931bf048ac2569136d549bb, type: 3}

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FlappyBird.Config
 {
@@ -6,7 +7,7 @@ namespace FlappyBird.Config
     public class AudioConfig : ScriptableObject
     {
         [Header("Player")]
-        public AudioClip jumpClip;
+        public AudioClip[] jumpClips;
         public AudioClip hitClip;
         public AudioClip eatClip;
         
@@ -14,6 +15,6 @@ namespace FlappyBird.Config
         public AudioClip[] pointClips;
         
         [Header( "UI")]
-        public AudioClip hoverClip;
+        public AudioClip[] hoverClips;
     }
 }

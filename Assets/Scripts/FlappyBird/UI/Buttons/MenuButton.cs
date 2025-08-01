@@ -29,7 +29,7 @@ namespace FlappyBird.UI
         {
             base.OnPointerEnter(eventData);
             
-            AudioManager.Instance?.PlayUIHover();
+            AudioManager.Instance?.PlayRandomUIHover();
             _animator.SetTrigger(Selected);
 
             hoveredVFX.SetActive(true);

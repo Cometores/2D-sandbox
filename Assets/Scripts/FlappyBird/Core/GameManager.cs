@@ -2,6 +2,7 @@ using FlappyBird.Input;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace FlappyBird.Core
 {
@@ -25,7 +26,7 @@ namespace FlappyBird.Core
         public static bool IsBeaten => CurrentScore > BestScore;
         public static bool IsPlaying => Application.isPlaying;
         
-        private bool _isPaused;
+        public bool isPaused;
 
         private void Awake()
         {
@@ -41,7 +42,7 @@ namespace FlappyBird.Core
 
         private void Start()
         {
-            _isPaused = false;
+            isPaused = false;
             pauseMenuUI.SetActive(false);
             pauseText.SetActive(false);
         }
@@ -62,10 +63,10 @@ namespace FlappyBird.Core
 
         public void TogglePause()
         {
-            _isPaused = !_isPaused;
-            Time.timeScale = _isPaused ? 0f : 1f;
-            pauseMenuUI.SetActive(_isPaused);
-            pauseText.SetActive(_isPaused);
+            isPaused = !isPaused;
+            Time.timeScale = isPaused ? 0f : 1f;
+            pauseMenuUI.SetActive(isPaused);
+            pauseText.SetActive(isPaused);
         }
 
         #endregion

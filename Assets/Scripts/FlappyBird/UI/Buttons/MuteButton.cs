@@ -58,7 +58,6 @@ namespace FlappyBird.UI
         {
             if (e.NewVolume == 0f)
             {
-                Debug.Log("Меняю спрайт на мьют");
                 Image.sprite = mutedSprite;
             }
             else if (e.NewVolume >= Constants.MUTE_THRESHOLD)

@@ -60,7 +60,7 @@ namespace FlappyBird
 
         private void Jump()
         {
-            if (_isDead) return;
+            if (_isDead || GameManager.Instance.isPaused) return;
             
             _rb.AddForce(Vector2.up * config.jumpForce, ForceMode2D.Impulse);
             transform.rotation = Quaternion.identity;

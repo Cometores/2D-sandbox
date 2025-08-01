@@ -2673,6 +2673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 1123275752}
   pauseText: {fileID: 28519466}
+  isPaused: 0
 --- !u!1 &1232769600
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,8 +2734,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -854718377
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -2126974547, guid: 43ca0ae0b103f894b8aca134fe8164c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4799,10 +4800,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2937457599027513752, guid: b939305aacf43d4469188978420e8187, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2937457599027513752, guid: b939305aacf43d4469188978420e8187, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.13
       objectReference: {fileID: 0}
@@ -4845,10 +4842,6 @@ PrefabInstance:
     - target: {fileID: 2937457599027513763, guid: b939305aacf43d4469188978420e8187, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2937457599027513763, guid: b939305aacf43d4469188978420e8187, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -85,18 +85,19 @@ namespace FlappyBird.Core
 
         #region Sound Shots
 
-        public void PlayJump() => PlaySound(config.jumpClip);
+        public void PlayJump() => PlayRandomSound(config.jumpClips);
         public void PlayHit() => PlaySound(config.hitClip);
         public void PlayEat() => PlaySound(config.eatClip);
-        public void PlayRandomScoringPoint()
+        public void PlayRandomScoringPoint() => PlayRandomSound(config.pointClips);
+        public void PlayRandomUIHover() => PlayRandomSound(config.hoverClips);
+        private void PlayRandomSound(AudioClip[] configPointClips)
         {
-            if (config.pointClips.Length > 0)
+            if (configPointClips.Length > 0)
             {
-                PlaySound(config.pointClips[Random.Range(0, config.pointClips.Length)]);
+                PlaySound(configPointClips[Random.Range(0, configPointClips.Length)]);
             }
         }
-        public void PlayUIHover() => PlaySound(config.hoverClip);
-
+        
         private void PlaySound(AudioClip clip)
         {
             if (!IsMuted && clip != null)

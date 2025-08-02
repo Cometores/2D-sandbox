@@ -82,6 +82,8 @@ namespace FlappyBird
 
         private void OnTriggerEnter2D(Collider2D col)
         {
+            if(_isDead) return;
+            
             if (col.CompareTag("Score")) {
                 _score += _isPowered ? config.scoreMultiplier : 1;
                 _ui.UpdateScoreTxt(_score);
@@ -114,6 +116,6 @@ namespace FlappyBird
 
         private void InvertParallaxSpeed() => Parallax.InvertSpeed();
 
-        private void Restart() => GameManager.Instance.RestartLevel();
+        private void Restart() => GameManager.Instance.RestartGame();
     }
 }

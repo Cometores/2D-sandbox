@@ -1,5 +1,4 @@
-﻿using System;
-using FlappyBird.Core;
+﻿using FlappyBird.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,7 +18,7 @@ namespace FlappyBird.UI.Buttons
 
         private void Start()
         {
-            var volume = PlayerPrefs.GetFloat("Volume", Constants.DEFAULT_VOLUME);
+            float volume = PlayerPrefs.GetFloat("Volume", Constants.DEFAULT_VOLUME);
             SetFillAmountSafe(volume);
         }
 
@@ -39,44 +38,39 @@ namespace FlappyBird.UI.Buttons
         {
             if (_fillImage == null) return;
 
-            var imageWidth = _fillImage.rectTransform.rect.width * 2;
-            var fixedClick = eventData.position.x - _fillImage.transform.position.x;
-            var percentage = fixedClick / imageWidth;
-            var final = MathF.Round(percentage * 20) / 20;
+            RectTransform fillRect = _fillImage.rectTransform;
 
-            SetFillAmountSafe(final);
+            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    fillRect, eventData.position, eventData.pressEventCamera, out Vector2 localPoint))
+                return;
 
-            if (final == 0)
-            {
+            float width = fillRect.rect.width;
+            float normalizedX = (localPoint.x / width) + 0.5f;
+
+            float volume = Mathf.Round(Mathf.Clamp01(normalizedX) * 20f) / 20f;
+
+            SetFillAmountSafe(volume);
+
+            if (volume == 0)
                 AudioManager.Instance?.ToggleMute();
-            }
             else
-            {
-                AudioManager.Instance?.SetVolume(final);
-            }
+                AudioManager.Instance?.SetVolume(volume);
         }
+
 
         private void OnVolumeChanged(object sender, VolumeChangedEventArgs e)
         {
-            if (!this || !isActiveAndEnabled) return;
-            if (_fillImage == null) return;
-
-            if (Mathf.Approximately(e.NewVolume, e.OldVolume))
-                return;
+            if (!this || !isActiveAndEnabled || _fillImage == null) return;
+            if (Mathf.Approximately(e.NewVolume, e.OldVolume)) return;
 
             SetFillAmountSafe(e.NewVolume);
 
             if (previousImage != null)
             {
-                if (e.NewVolume == 0)
-                {
-                    previousImage.gameObject.SetActive(true);
+                bool shouldShow = e.NewVolume == 0f;
+                previousImage.gameObject.SetActive(shouldShow);
+                if (shouldShow)
                     previousImage.fillAmount = e.OldVolume;
-                }
-                else if (e.NewVolume >= 0.05f)
-                {
-                    previousImage.gameObject.SetActive(false);
-                }
             }
         }
 

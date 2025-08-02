@@ -24,8 +24,6 @@ namespace FlappyBird.Core
         public static int CurrentScore { get; set; }
         public static int BestScore { get; private set; }
         public static bool IsBeaten => CurrentScore > BestScore;
-        public static bool IsPlaying => Application.isPlaying;
-        
         public bool isPaused;
 
         private void Awake()
@@ -71,9 +69,9 @@ namespace FlappyBird.Core
 
         #endregion
         
-        # region Level logic
+        # region Game logic
         
-        public void RestartLevel()
+        public void RestartGame()
         {
             Time.timeScale = 1f;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -93,7 +91,8 @@ namespace FlappyBird.Core
         #region Debug Tools
         
 #if UNITY_EDITOR
-        
+        private static bool IsPlaying => Application.isPlaying;
+
         [Button, EnableIf(nameof(IsPlaying))]
         private void SetCurrentScore999()
         {

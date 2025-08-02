@@ -17,6 +17,9 @@ namespace FlappyBird.Enemies.Movement
         [Header("Rotation")] 
         [SerializeField] private float tiltSmooth = 5f;
 
+        [Header("VFX")] 
+        [SerializeField] private GameObject deathVFX;
+        
         private float _timeOffset;
         private Vector3 _startPos;
         private Vector3 _prevPos;
@@ -33,6 +36,13 @@ namespace FlappyBird.Enemies.Movement
             Move();
             RotateTowardsDirection();
         }
+
+        public void Die()
+        {
+            GameObject vfx = Instantiate(deathVFX, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+
 
         private void Move()
         {

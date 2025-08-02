@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 216625445314362231}
   - component: {fileID: 8824903572160986480}
+  - component: {fileID: 1712986101568312948}
   - component: {fileID: 7847784745789570572}
   - component: {fileID: 2746218159160066003}
   - component: {fileID: 4017271607176924052}
-  - component: {fileID: 1712986101568312948}
+  - component: {fileID: 6989027883036996408}
   m_Layer: 0
   m_Name: Bat
   m_TagString: PowerUp
@@ -91,6 +92,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1712986101568312948
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3391493592806986646}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 347bcb2f3e5d248469b1ef9769520e83, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &7847784745789570572
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -177,25 +200,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalSpeed: 3.5
---- !u!95 &1712986101568312948
-Animator:
-  serializedVersion: 7
+--- !u!114 &6989027883036996408
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3391493592806986646}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 347bcb2f3e5d248469b1ef9769520e83, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ec1c74580c0594abf4cf672a6672d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathVFX: {fileID: 8377504630909853548, guid: ff32389142c1a9242ae914fcc7b659ff, type: 3}

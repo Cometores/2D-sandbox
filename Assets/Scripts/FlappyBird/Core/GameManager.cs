@@ -1,8 +1,8 @@
 using FlappyBird.Input;
+using FlappyBird.UI;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace FlappyBird.Core
 {
@@ -19,6 +19,7 @@ namespace FlappyBird.Core
     {
         [SerializeField] private GameObject pauseMenuUI;
         [SerializeField] private GameObject pauseText;
+        [SerializeField] private GameObject skullPostProcEffect;
         
         public static GameManager Instance { get; private set; }
         public static int CurrentScore { get; set; }
@@ -43,6 +44,19 @@ namespace FlappyBird.Core
             isPaused = false;
             pauseMenuUI.SetActive(false);
             pauseText.SetActive(false);
+            skullPostProcEffect.SetActive(false);
+        }
+
+        public void HandleSkullMechanic()
+        {
+            ToggleSkullEffect();
+            Invoke(nameof(ToggleSkullEffect), 3f);
+        }
+        
+        private void ToggleSkullEffect()
+        {
+            skullPostProcEffect.SetActive(!skullPostProcEffect.activeSelf);
+            Parallax.InvertSpeed();
         }
 
         #region Pause input logic

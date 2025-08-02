@@ -1,5 +1,6 @@
 using FlappyBird.Config;
 using FlappyBird.Core;
+using FlappyBird.Enemies.Movement;
 using FlappyBird.Input;
 using FlappyBird.UI;
 using UnityEngine;
@@ -99,13 +100,12 @@ namespace FlappyBird
                 _powerUpTimeLeft = config.powerUpDuration;
                 AudioManager.Instance.PlayEat();
                 _animator.SetTrigger(Eat);
-                Destroy(col.gameObject);
+                col.gameObject.GetComponent<Bat>().Die();
             }
             else if (col.CompareTag("Skull"))
             {
-                InvertParallaxSpeed();
-                Destroy(col.gameObject);
-                Invoke(nameof(InvertParallaxSpeed), 3f);
+                GameManager.Instance.HandleSkullMechanic();
+                col.gameObject.GetComponent<SinMovement>().Die();
             }
 
             GameManager.CurrentScore = _score;
@@ -113,8 +113,6 @@ namespace FlappyBird
             if (_score > GameManager.BestScore)
                 PlayerPrefs.SetInt("bestScore", _score);
         }
-
-        private void InvertParallaxSpeed() => Parallax.InvertSpeed();
 
         private void Restart() => GameManager.Instance.RestartGame();
     }

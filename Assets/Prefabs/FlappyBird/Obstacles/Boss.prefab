@@ -185,7 +185,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 15e4aa7845868164a8982699343a9ead, type: 3}
   - {fileID: 21300000, guid: 5fde91e770ffedd40aa754984122667c, type: 3}
   - {fileID: 21300000, guid: c4c71efc8fa05634e8d0157a3eaa2738, type: 3}
-  - {fileID: 21300000, guid: 6da85c71e7010fc40b023f8d002ee13e, type: 3}
   - {fileID: 21300000, guid: e2b07514d5639434596cce23d63e0259, type: 3}
   - {fileID: 21300000, guid: acdeb7bc992c5444d858d88ebe891336, type: 3}
   spriteChangeInterval: 0.2

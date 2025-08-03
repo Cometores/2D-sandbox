@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class Bat : MonoBehaviour
+namespace FlappyBird.Enemies
 {
-    [Header("VFX")] 
-    [SerializeField] private GameObject deathVFX;
-    public void Die()
+    public class Bat : MonoBehaviour
     {
-        GameObject vfx = Instantiate(deathVFX, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        [Header("VFX")] 
+        [SerializeField] private GameObject deathVFX;
+        public void Die()
+        {
+            GameObject vfx = Instantiate(deathVFX, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }

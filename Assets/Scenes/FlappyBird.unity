@@ -332,12 +332,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28519466}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 632927582}
+  m_Father: {fileID: 110064477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 89dce8295856fe444a9337d6e7f8a754, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9bcfb363a2ac0748b7d5f2bb5bc3e23, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -543,6 +543,7 @@ RectTransform:
   m_Children:
   - {fileID: 632927582}
   - {fileID: 1479232262}
+  - {fileID: 28519467}
   - {fileID: 386820211}
   m_Father: {fileID: 1972648477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1620,7 +1621,10 @@ MonoBehaviour:
   rocks: {fileID: 3760466963772866266, guid: e1cad60d067235140b5382afa5bd332b, type: 3}
   rocksSpawn: {fileID: 1519444073}
   spawnContainer: {fileID: 2085116516}
-  spawnInterval: 2
+  startSpawnInterval: 2
+  finalSpawnInterval: 0.95
+  timeToAchieve: 60
+  rocksEverySeconds: 5.6
 --- !u!4 &570157465
 Transform:
   m_ObjectHideFlags: 0
@@ -1700,7 +1704,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1662760863}
-  - {fileID: 28519467}
   - {fileID: 492906050}
   - {fileID: 1808029854}
   m_Father: {fileID: 110064477}

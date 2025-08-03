@@ -1,5 +1,6 @@
 using FlappyBird.Config;
 using FlappyBird.Core;
+using FlappyBird.Enemies;
 using FlappyBird.Enemies.Movement;
 using FlappyBird.Input;
 using FlappyBird.UI;

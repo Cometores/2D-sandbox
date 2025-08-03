@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace FlappyBird.Enemies
     {
         [Header("Obstacles")]
         [SerializeField] private List<SpawnItem> obstacleMappings;
-        
+
         [Header("Fallback obstacle")]
         [SerializeField] private GameObject fallbackRock;
         [SerializeField] private Transform fallbackPoint;
@@ -23,9 +24,12 @@ namespace FlappyBird.Enemies
         [SerializeField] private Transform spawnContainer;
 
         [Header("Timing")]
-        [SerializeField] private float spawnInterval = 2f;
+        [SerializeField] private float startSpawnInterval = 2f;
+        [SerializeField] private float finalSpawnInterval = 1f;
+        [SerializeField] private float timeToAchieve = 30f;
+        [SerializeField] private float rocksEverySeconds = 5.6f;
 
-        private float _rocksInterval;
+        private float _spawnInterval;
         private int _spawnCounter;
 
         private void Awake()
@@ -36,10 +40,34 @@ namespace FlappyBird.Enemies
 
         private void Start()
         {
-            _rocksInterval = spawnInterval * 2.8f;
+            _spawnInterval = startSpawnInterval;
+            StartCoroutine(SpawnLoop());
+            StartCoroutine(RocksLoop());
+        }
 
-            InvokeRepeating(nameof(SpawnObstacle), 0f, spawnInterval);
-            InvokeRepeating(nameof(SpawnRocks), 0f, _rocksInterval);
+        private IEnumerator SpawnLoop()
+        {
+            float elapsed = 0f;
+
+            while (true)
+            {
+                SpawnObstacle();
+
+                elapsed += _spawnInterval;
+                float t = Mathf.Clamp01(elapsed / timeToAchieve);
+                _spawnInterval = Mathf.Lerp(startSpawnInterval, finalSpawnInterval, t);
+
+                yield return new WaitForSeconds(_spawnInterval);
+            }
+        }
+
+        private IEnumerator RocksLoop()
+        {
+            while (true)
+            {
+                SpawnRocks();
+                yield return new WaitForSeconds(rocksEverySeconds);
+            }
         }
 
         private void SpawnObstacle()

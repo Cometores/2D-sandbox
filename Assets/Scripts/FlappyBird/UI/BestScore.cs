@@ -35,6 +35,8 @@ namespace FlappyBird.UI
 
         private void OnEnable()
         {
+            _pointerEntered = false;
+            beatenGlowingVFX.SetActive(false);
             _appearAnimationPlayed = false;
             _animator.SetBool(IsBeaten, GameManager.IsBeaten);
         }

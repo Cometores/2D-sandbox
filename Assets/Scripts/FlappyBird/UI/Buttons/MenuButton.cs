@@ -1,28 +1,24 @@
+using System;
 using FlappyBird.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace FlappyBird.UI.Buttons
 {
+    [RequireComponent(typeof(Animator))]
     public class MenuButton : ButtonBase
     {
-        [SerializeField] private GameObject hoveredVFX;
+        public event Action Selected;
+        public event Action Unselected;
         
-        private Animator[] _vfxAnimators;
-        private Animator _animator; 
-        private static readonly int LostFocus = Animator.StringToHash("lostFocus");
-        private static readonly int Selected = Animator.StringToHash("selected");
-        private static readonly int Rand = Animator.StringToHash("rand");
+        private Animator _animator;
+        private static readonly int SelectedHash = Animator.StringToHash("selected");
 
         protected override void Awake()
         {
             base.Awake();
+            
             _animator = GetComponent<Animator>();
-        }
-
-        private void Start()
-        {
-            _vfxAnimators = GetComponentsInChildren<Animator>(true);
         }
 
         public override void OnPointerEnter(PointerEventData eventData)
@@ -30,38 +26,22 @@ namespace FlappyBird.UI.Buttons
             base.OnPointerEnter(eventData);
             
             AudioManager.Instance?.PlayRandomUIHover();
-            _animator.SetTrigger(Selected);
-
-            hoveredVFX.SetActive(true);
-            var randI = Random.Range(0, 3);
-            foreach (Animator animator in _vfxAnimators)
-            {
-                animator.SetInteger(Rand, randI);
-                animator.SetTrigger(Selected);
-            }
+            _animator.SetTrigger(SelectedHash);
+            
+            Selected?.Invoke();
         }
 
         public override void OnPointerExit(PointerEventData eventData)
         {
             base.OnPointerExit(eventData);
             
-            var randI = Random.Range(0, 3);
-            foreach (Animator animator in _vfxAnimators)
-            {
-                animator.SetInteger(Rand, randI);
-                animator.SetTrigger(LostFocus);
-            }
+            Unselected?.Invoke();
         }
 
-        public void TurnOffVFX()
-        {
-            hoveredVFX.SetActive(false);
-        }
-        
         protected override void OnDisable()
         {
+            Unselected?.Invoke();
             base.OnDisable();
-            TurnOffVFX();
         }
     }
 }

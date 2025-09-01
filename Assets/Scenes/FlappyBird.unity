@@ -267,6 +267,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1123275753}
     m_Modifications:
+    - target: {fileID: 1586600570488168571, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3911867691264745978, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -365,6 +369,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8573408817604387295, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645521718280105032, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -731,6 +739,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1123275753}
     m_Modifications:
+    - target: {fileID: 1586600570488168571, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1774018900618168275, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
@@ -881,6 +893,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8573408817604387295, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645521718280105032, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1125,6 +1141,7 @@ GameObject:
   - component: {fileID: 522005949}
   - component: {fileID: 522005948}
   - component: {fileID: 522005947}
+  - component: {fileID: 522005950}
   m_Layer: 0
   m_Name: PostProcess
   m_TagString: Untagged
@@ -1185,6 +1202,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522005950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522005946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eab6f9508e05a0348b6255c79018983f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &570157463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,6 +2018,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1123275753}
     m_Modifications:
+    - target: {fileID: 1586600570488168571, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1774018900618168275, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
@@ -2135,6 +2168,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8573408817604387295, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645521718280105032, guid: f6c038d3ada058b40a8bb781db060895, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3808,9 +3845,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1186782045993168879, guid: 68c9117604571c84aa828b7af98f0430, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2451361371918972217, guid: 68c9117604571c84aa828b7af98f0430, type: 3}
       propertyPath: m_Name
       value: VolumeBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180761346147115996, guid: 68c9117604571c84aa828b7af98f0430, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,4 +1,5 @@
-# 2D-sandbox
+![readmeHeader.png](docs/readmeHeader.png)
+
 Collection of 2D arcade games and one of them can be played [here](https://cometores.itch.io/doomybirb). ^_^
 - flappy bird clone
 - classical space invaders
@@ -13,14 +14,14 @@ Collection of 2D arcade games and one of them can be played [here](https://comet
 - 4 types of obstacles
 - 2 types of collectables
 
-![DoomyBirb.gif](other/DoomyBirb.gif)
+![DoomyBirb.gif](docs/DoomyBirb.gif)
 
 ## Space Invaders
 - enemies damage model
 
-![SpaceInvaders.gif](other/SpaceInvaders.gif)
+![SpaceInvaders.gif](docs/SpaceInvaders.gif)
 
 ## Horror Game
 - scary? no..
 
-![HorrorGame.gif](other/HorrorGame.gif)
+![HorrorGame.gif](docs/HorrorGame.gif)

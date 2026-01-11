@@ -11,7 +11,7 @@ namespace FlappyBird.Enemies.Movement
     {
         protected Rigidbody2D _rb;
 
-        [FormerlySerializedAs("speed")][SerializeField] protected float horizontalSpeed = 3f;
+        [SerializeField] protected float horizontalSpeed = 3f;
 
         protected virtual void Awake() => _rb = GetComponent<Rigidbody2D>();
 

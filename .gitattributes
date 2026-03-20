@@ -1,1 +1,117 @@
-*.cs       text eol=crlf
+###############################################################################
+# Default text handling
+###############################################################################
+* text=auto eol=lf
+
+###############################################################################
+# C# / source code
+###############################################################################
+*.cs                   text diff=csharp
+*.csproj               text
+*.sln                  text eol=crlf
+*.props                text
+*.targets              text
+*.editorconfig         text
+*.ruleset              text
+*.json                 text
+*.yaml                 text
+*.yml                  text
+*.xml                  text
+*.md                   text
+*.txt                  text
+*.gitignore            text
+*.gitattributes        text
+
+###############################################################################
+# Scripts / shell
+###############################################################################
+*.sh                   text eol=lf
+*.bash                 text eol=lf
+*.ps1                  text eol=crlf
+*.bat                  text eol=crlf
+*.cmd                  text eol=crlf
+
+###############################################################################
+# Unity YAML-based assets
+# Keep them text so Git can diff them.
+# Route merges through UnityYAMLMerge.
+###############################################################################
+*.meta                 text eol=lf merge=unityyamlmerge
+*.unity                text eol=lf merge=unityyamlmerge
+*.prefab               text eol=lf merge=unityyamlmerge
+*.asset                text eol=lf merge=unityyamlmerge
+*.mat                  text eol=lf merge=unityyamlmerge
+*.anim                 text eol=lf merge=unityyamlmerge
+*.controller           text eol=lf merge=unityyamlmerge
+*.playable             text eol=lf merge=unityyamlmerge
+*.overrideController   text eol=lf merge=unityyamlmerge
+*.physicsMaterial2D    text eol=lf merge=unityyamlmerge
+*.physicsMaterial      text eol=lf merge=unityyamlmerge
+*.guiskin              text eol=lf merge=unityyamlmerge
+*.fontsettings         text eol=lf merge=unityyamlmerge
+*.flare                text eol=lf merge=unityyamlmerge
+*.mask                 text eol=lf merge=unityyamlmerge
+*.brush                text eol=lf merge=unityyamlmerge
+*.preset               text eol=lf merge=unityyamlmerge
+*.spriteatlas          text eol=lf merge=unityyamlmerge
+*.terrainlayer         text eol=lf merge=unityyamlmerge
+
+###############################################################################
+# Unity package / UI files
+###############################################################################
+*.uxml                 text eol=lf
+*.uss                  text eol=lf
+*.asmdef               text eol=lf
+*.asmref               text eol=lf
+*.shader               text eol=lf
+*.compute              text eol=lf
+*.hlsl                 text eol=lf
+*.hlsli                text eol=lf
+*.cginc                text eol=lf
+
+###############################################################################
+# Images / audio / video / archives / binaries
+###############################################################################
+*.png                  binary
+*.jpg                  binary
+*.jpeg                 binary
+*.gif                  binary
+*.psd                  binary
+*.tga                  binary
+*.tif                  binary
+*.tiff                 binary
+*.bmp                  binary
+*.exr                  binary
+*.hdr                  binary
+*.ico                  binary
+
+*.fbx                  binary
+*.blend                binary
+*.obj                  binary
+*.max                  binary
+
+*.wav                  binary
+*.mp3                  binary
+*.ogg                  binary
+*.aiff                 binary
+*.flac                 binary
+
+*.mp4                  binary
+*.mov                  binary
+*.avi                  binary
+*.webm                 binary
+
+*.zip                  binary
+*.7z                   binary
+*.rar                  binary
+*.dll                  binary
+*.exe                  binary
+*.so                   binary
+*.dylib                binary
+*.pdf                  binary
+
+###############################################################################
+# Generated lockfile as text
+###############################################################################
+Packages/packages-lock.json text eol=lf
+Packages/manifest.json      text eol=lf

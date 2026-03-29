@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/* * * The script is tied to the text - "Press any key to start". 
+/* * * The script is tied to the text - "Press any key to start".
  * Starts the tape animation and text animation, hides the game object responsible for the boot menu, and opens the main game * * */
 namespace HorrorGame
 {
@@ -12,14 +12,14 @@ namespace HorrorGame
         private Animator _videoTapeAnimator;     // Animator for Video Tape
         private AudioSource _aSource;
         private InputAction _anyKeyAction;
-        
+
         [SerializeField] private GameObject loadScene;
         [SerializeField] private GameObject gameScene;
         [SerializeField] private GameObject videoTape;
         [SerializeField] private AudioClip tapeClip;
         [SerializeField] private float afterSec;    // Play Clip after the time after pressing Key
         [SerializeField] private float speed;
-        
+
         private float _phase;    // phase for Text sin-Animation
 
         private void OnEnable()
@@ -69,6 +69,10 @@ namespace HorrorGame
             Destroy(gameObject);
         }
 
-        private void PlayClip() => _aSource.PlayOneShot(tapeClip);
+        private void PlayClip()
+        {
+            _aSource.Stop();
+            _aSource.PlayOneShot(tapeClip);
+        }
     }
 }

@@ -34,6 +34,8 @@ namespace SpaceShooter
         private int _bestScoreValue;
         private int _actualScore;
 
+        private const string BEST_SCORE_SAVE_CONST = "spaceShooterBestScore";
+
         private void Awake()
         {
             _auSource = GetComponent<AudioSource>();
@@ -46,9 +48,9 @@ namespace SpaceShooter
             _bestScoreTxt = bestScoreObj.GetComponent<TextMeshProUGUI>();
 
             // Setting the best score
-            if (PlayerPrefs.HasKey("bestScore"))
+            if (PlayerPrefs.HasKey(BEST_SCORE_SAVE_CONST))
             {
-                _bestScoreValue = PlayerPrefs.GetInt("bestScore");
+                _bestScoreValue = PlayerPrefs.GetInt(BEST_SCORE_SAVE_CONST);
                 _bestScoreTxt.text = _bestScoreValue.ToString();
             }
         }
@@ -131,14 +133,14 @@ namespace SpaceShooter
             /* * * Best score check * * */
             _actualScore = int.Parse(_scoreTxt.text);
             // if we already have best score
-            if (PlayerPrefs.HasKey("bestScore"))
+            if (PlayerPrefs.HasKey(BEST_SCORE_SAVE_CONST))
             {
                 if (_actualScore > _bestScoreValue)
-                    PlayerPrefs.SetInt("bestScore", _actualScore);
+                    PlayerPrefs.SetInt(BEST_SCORE_SAVE_CONST, _actualScore);
             }
             // if best score doesn't exist
             else
-                PlayerPrefs.SetInt("bestScore", _actualScore);
+                PlayerPrefs.SetInt(BEST_SCORE_SAVE_CONST, _actualScore);
 
             Instantiate(explosion, transform.position, Quaternion.identity);
             Invoke(nameof(RestartGame), 1.2f);

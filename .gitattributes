@@ -39,7 +39,6 @@
 *.meta                 text eol=lf merge=unityyamlmerge
 *.unity                text eol=lf merge=unityyamlmerge
 *.prefab               text eol=lf merge=unityyamlmerge
-*.asset                text eol=lf merge=unityyamlmerge
 *.mat                  text eol=lf merge=unityyamlmerge
 *.anim                 text eol=lf merge=unityyamlmerge
 *.controller           text eol=lf merge=unityyamlmerge
@@ -55,6 +54,7 @@
 *.preset               text eol=lf merge=unityyamlmerge
 *.spriteatlas          text eol=lf merge=unityyamlmerge
 *.terrainlayer         text eol=lf merge=unityyamlmerge
+*.asset                -text
 
 ###############################################################################
 # Unity package / UI files

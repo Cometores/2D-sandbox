@@ -34,7 +34,7 @@ namespace CookieClicker
 
         public void ScientistOnClick()
         {
-            if (Bank.Account >= normalScientistCost && scientistCnt < scientistMultiplier.maxAmount)
+            if (Account >= normalScientistCost && scientistCnt < scientistMultiplier.maxAmount)
             {
                 // Spawn Scientist
                 Vector3 newSpawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);
@@ -42,17 +42,17 @@ namespace CookieClicker
                 scientist.GetComponent<ScientistMovement>().xyMax = xyMax;
                 GameObject newScientist = Instantiate(scientist, newSpawnPos, Quaternion.identity);
 
-                Bank.Account -= normalScientistCost;
+                Account -= normalScientistCost;
 
                 // Cost changes && amount changes
                 normalScientistCost = (int)(scientistMultiplier.baseCost * Mathf.Pow(scientistMultiplier.multiplier, scientistCnt));
                 scientistCnt++;
 
                 scientistCounterText.text = $"{scientistCnt}";
-                scientistCostText.text = $"Cost: {normalScientistCost} �";
+                scientistCostText.text = $"Cost: {normalScientistCost} €";
 
-                Bank.AmountPerSec += Bank.StudentPrice;
-                Bank.UpdateAmountPerSec();
+                AmountPerSec += StudentPrice;
+                UpdateAmountPerSec();
             }
         }
     }

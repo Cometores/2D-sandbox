@@ -17,9 +17,11 @@ namespace CookieClicker
 
         private void Awake() => _sr = GetComponent<SpriteRenderer>();
 
+        private void Start() => transform.rotation = Quaternion.Euler(0, 0, 90);
+
         private void Update()
-        {   
-            _newPosition = (transform.position + Vector3.up * (walkSpeed * Time.deltaTime * _direction));
+        {
+            _newPosition = (transform.position + transform.right * (walkSpeed * Time.deltaTime * _direction));
             //Restrict the scientist's exit from the rectangle with the clamp function
             transform.position = new Vector3(Mathf.Clamp(_newPosition.x, xyMin.x, xyMax.x), Mathf.Clamp(_newPosition.y, xyMin.y, xyMax.y), 0);
 

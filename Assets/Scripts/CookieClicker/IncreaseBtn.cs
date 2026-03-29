@@ -34,7 +34,7 @@ namespace CookieClicker
                 _clickCnt++;
 
                 _clickCounterText.text = $"{_clickCnt}";
-                _clickCostText.text = $"Cost: {_normalClickCost} �";
+                _clickCostText.text = $"Cost: {_normalClickCost} €";
                 ClickPrice++;
             }
         }

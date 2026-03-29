@@ -34,7 +34,7 @@ namespace CookieClicker
 
         public void ProfessorOnClick()
         {
-            if (Bank.Account >= normalProfessortCost && professorCnt < professorMultiplier.maxAmount)
+            if (Account >= normalProfessortCost && professorCnt < professorMultiplier.maxAmount)
             {
                 // Spawn Professor
                 Vector3 newSpawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);
@@ -42,17 +42,17 @@ namespace CookieClicker
                 professor.GetComponent<ProfessorMovement>().xyMax = xyMax;
                 Instantiate(professor, newSpawnPos, Quaternion.identity);
 
-                Bank.Account -= normalProfessortCost;
+                Account -= normalProfessortCost;
 
                 // Cost changes && amount changes
                 normalProfessortCost = (int)(professorMultiplier.baseCost * Mathf.Pow(professorMultiplier.multiplier, professorCnt));
                 professorCnt++;
 
                 professorCounterText.text = $"{professorCnt}";
-                professorCostText.text = $"Cost: {normalProfessortCost} �";
+                professorCostText.text = $"Cost: {normalProfessortCost} €";
 
-                Bank.AmountPerSec += Bank.StudentPrice;
-                Bank.UpdateAmountPerSec();
+                AmountPerSec += StudentPrice;
+                UpdateAmountPerSec();
             }
         }
     }

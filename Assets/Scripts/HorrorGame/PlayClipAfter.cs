@@ -9,10 +9,27 @@ namespace HorrorGame
         [SerializeField] private AudioClip clip;
         [SerializeField] private float seconds;
 
+        private bool _wasPlayed;
+
         private void Awake() => _auSource = GetComponent<AudioSource>();
 
         private void OnEnable() => Invoke(nameof(PlayClip), seconds);
 
-        private void PlayClip() => _auSource.PlayOneShot(clip);
+        private void PlayClip()
+        {
+            _auSource.PlayOneShot(clip);
+            _wasPlayed = true;
+        }
+
+        private void OnDisable()
+        {
+            if (_wasPlayed)
+            {
+                return;
+            }
+
+            Debug.Log(gameObject.name + " was disabled before playing the audio clip", this);
+            CancelInvoke();
+        }
     }
 }

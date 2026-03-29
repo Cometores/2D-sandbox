@@ -224,11 +224,15 @@ dotnet_naming_style.underscore_camel_case_style.capitalization = camel_case
 # Unity serialized assets and engine-managed YAML files
 # These files should not be "cleaned up" aggressively by the IDE.
 # ------------------------------------------------------------------------------
-[*.{unity,prefab,asset,meta,mat,anim,controller,overrideController,physicMaterial,physicsMaterial2D,playable,mask,scenetemplate}]
+[*.{unity,prefab,meta,mat,anim,controller,overrideController,physicsMaterial,physicsMaterial2D,playable,mask,scenetemplate,terrainlayer,spriteatlas,preset,brush,flare,fontsettings,guiskin}]
 charset = utf-8
 end_of_line = lf
 indent_style = space
 indent_size = 2
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[*.asset]
 trim_trailing_whitespace = false
 insert_final_newline = false
 

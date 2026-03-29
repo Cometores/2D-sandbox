@@ -21,7 +21,7 @@ namespace CookieClicker
             newIncounterText.GetComponent<TextMeshProUGUI>().text = $"+{ClickPrice}";
             newIncounterText.transform.SetParent(transform);
 
-            Bank.Account += ClickPrice;
+            Account += ClickPrice;
         }
     }
 }

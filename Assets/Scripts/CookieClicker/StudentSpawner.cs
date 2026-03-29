@@ -34,23 +34,23 @@ namespace CookieClicker
 
         public void StudentOnClick()
         {
-            if (Bank.Account >= normalStudentCost && studentCnt < studentMultiplier.maxAmount)
+            if (Account >= normalStudentCost && studentCnt < studentMultiplier.maxAmount)
             {
                 // Spawn Student
                 Vector3 newSpawnPos = new Vector3(Random.Range(xyMin.x, xyMax.x), Random.Range(xyMin.y, xyMax.y), 0);
                 Instantiate(student, newSpawnPos, Quaternion.identity);
 
-                Bank.Account -= studentMultiplier.baseCost;
+                Account -= studentMultiplier.baseCost;
 
                 // Cost changes && amount changes
                 normalStudentCost = (int)(studentMultiplier.baseCost * Mathf.Pow(studentMultiplier.multiplier, studentCnt));
                 studentCnt++;
 
                 studentCounterText.text = $"{studentCnt}";
-                studentCostText.text = $"Cost: {normalStudentCost} �";
+                studentCostText.text = $"Cost: {normalStudentCost} €";
 
-                Bank.AmountPerSec += Bank.StudentPrice;
-                Bank.UpdateAmountPerSec();
+                AmountPerSec += StudentPrice;
+                UpdateAmountPerSec();
             }
         }
     }
